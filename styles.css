@@ -8,26 +8,26 @@
 
 /* ---------- Токены ---------- */
 :root {
-  /* Тёплая тёмная шкала (эспрессо) */
-  --ink-950: oklch(0.135 0.012 56);
-  --ink-900: oklch(0.165 0.014 56);
-  --ink-850: oklch(0.195 0.016 56);
-  --ink-800: oklch(0.235 0.018 58);
-  --ink-700: oklch(0.30 0.020 60);
-  --line:    oklch(0.40 0.022 62 / 0.30);
-  --line-strong: oklch(0.55 0.03 64 / 0.45);
+  /* Тёмная сине-навигационная шкала (королевский синий) */
+  --ink-950: oklch(0.155 0.045 258);
+  --ink-900: oklch(0.185 0.05 258);
+  --ink-850: oklch(0.225 0.055 258);
+  --ink-800: oklch(0.27 0.06 257);
+  --ink-700: oklch(0.34 0.07 256);
+  --line:    oklch(0.50 0.05 250 / 0.32);
+  --line-strong: oklch(0.62 0.07 248 / 0.50);
 
-  /* Кремовые / песочные */
-  --cream:  oklch(0.945 0.018 82);
-  --sand:   oklch(0.86 0.045 80);
-  --muted:  oklch(0.72 0.028 72);
-  --faint:  oklch(0.58 0.025 68);
+  /* Светлые прохладные */
+  --cream:  oklch(0.955 0.012 240);
+  --sand:   oklch(0.87 0.05 232);
+  --muted:  oklch(0.74 0.04 240);
+  --faint:  oklch(0.60 0.045 246);
 
-  /* Акценты — тёплые */
-  --terra:      oklch(0.66 0.145 46);
-  --terra-soft: oklch(0.73 0.115 50);
-  --terra-deep: oklch(0.50 0.12 44);
-  --gold:       oklch(0.83 0.085 82);
+  /* Акценты — лазурь / королевский синий */
+  --terra:      oklch(0.62 0.17 248);
+  --terra-soft: oklch(0.74 0.14 242);
+  --terra-deep: oklch(0.42 0.18 258);
+  --gold:       oklch(0.86 0.11 218);
 
   /* Семантика */
   --bg: var(--ink-950);
@@ -82,7 +82,7 @@ body::after {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(120% 90% at 50% 0%, transparent 55%, oklch(0.1 0.01 50 / 0.55) 100%);
+  background: radial-gradient(120% 90% at 50% 0%, transparent 55%, oklch(0.10 0.05 260 / 0.6) 100%);
 }
 
 img, svg { display: block; max-width: 100%; }
@@ -133,7 +133,7 @@ section { position: relative; z-index: 2; }
 }
 .nav.scrolled {
   padding: 14px var(--pad);
-  background: oklch(0.135 0.012 56 / 0.72);
+  background: oklch(0.155 0.045 258 / 0.72);
   backdrop-filter: blur(16px) saturate(1.2);
   border-bottom: 1px solid var(--line);
 }
@@ -202,9 +202,9 @@ section { position: relative; z-index: 2; }
 .btn-ghost {
   border: 1px solid var(--line-strong);
   color: var(--cream);
-  background: oklch(0.235 0.018 58 / 0.3);
+  background: oklch(0.27 0.06 257 / 0.3);
 }
-.btn-ghost:hover { transform: translateY(-2px); border-color: var(--terra-soft); color: var(--cream); background: oklch(0.30 0.02 60 / 0.4); }
+.btn-ghost:hover { transform: translateY(-2px); border-color: var(--terra-soft); color: var(--cream); background: oklch(0.34 0.07 256 / 0.4); }
 .btn .arr { transition: transform 0.35s var(--ease-out); }
 .btn:hover .arr { transform: translateX(4px); }
 
@@ -238,8 +238,8 @@ section { position: relative; z-index: 2; }
   will-change: transform;
 }
 .glow-1 { width: 46vw; height: 46vw; top: 2%; left: 8%; background: radial-gradient(circle, var(--terra-deep), transparent 68%); opacity: 0.42; }
-.glow-2 { width: 38vw; height: 38vw; bottom: -6%; right: 4%; background: radial-gradient(circle, oklch(0.5 0.09 70), transparent 70%); opacity: 0.30; }
-.glow-3 { width: 30vw; height: 30vw; top: 32%; left: 44%; background: radial-gradient(circle, oklch(0.45 0.1 50), transparent 72%); opacity: 0.28; }
+.glow-2 { width: 38vw; height: 38vw; bottom: -6%; right: 4%; background: radial-gradient(circle, oklch(0.55 0.14 232), transparent 70%); opacity: 0.30; }
+.glow-3 { width: 30vw; height: 30vw; top: 32%; left: 44%; background: radial-gradient(circle, oklch(0.48 0.16 256), transparent 72%); opacity: 0.28; }
 
 /* плавающие слова-приветствия */
 .hero-particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
@@ -356,7 +356,7 @@ section { position: relative; z-index: 2; }
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   padding: clamp(16px, 2vw, 26px) 0;
-  background: oklch(0.165 0.014 56 / 0.5);
+  background: oklch(0.185 0.05 258 / 0.5);
 }
 .marquee-track {
   display: flex;
@@ -510,7 +510,7 @@ section { position: relative; z-index: 2; }
   flex-direction: column;
   justify-content: flex-end;
   gap: 10px;
-  background: linear-gradient(180deg, oklch(0.235 0.018 58 / 0.4), oklch(0.165 0.014 56 / 0.6));
+  background: linear-gradient(180deg, oklch(0.27 0.06 257 / 0.4), oklch(0.185 0.05 258 / 0.6));
   overflow: hidden;
   transform: translateY(40px);
   opacity: 0;
@@ -561,7 +561,7 @@ section { position: relative; z-index: 2; }
 /* ============================================================
    ПРЕПОДАВАТЕЛИ
    ============================================================ */
-.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 1.8vw, 28px); }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2vw, 32px); }
 .teacher { position: relative; }
 .teacher .ph { aspect-ratio: 3/4; border-radius: var(--radius); overflow: hidden; }
 .teacher-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-top: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line); transition: border-color 0.4s; }
@@ -575,7 +575,7 @@ section { position: relative; z-index: 2; }
   position: relative;
   background-color: var(--ink-850);
   background-image:
-    repeating-linear-gradient(135deg, oklch(0.235 0.018 58 / 0.6) 0 2px, transparent 2px 11px);
+    repeating-linear-gradient(135deg, oklch(0.27 0.06 257 / 0.6) 0 2px, transparent 2px 11px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -591,7 +591,7 @@ section { position: relative; z-index: 2; }
   padding: 6px 12px;
   border: 1px dashed var(--line-strong);
   border-radius: 100px;
-  background: oklch(0.135 0.012 56 / 0.6);
+  background: oklch(0.155 0.045 258 / 0.6);
   text-align: center;
   max-width: 80%;
 }
@@ -628,27 +628,27 @@ section { position: relative; z-index: 2; }
 .cta-glow { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .cta-glow span { position: absolute; width: 50vw; height: 50vw; border-radius: 50%; filter: blur(90px); }
 .cta-glow .a { top: -20%; left: -5%; background: radial-gradient(circle, var(--terra-deep), transparent 70%); opacity: 0.3; }
-.cta-glow .b { bottom: -25%; right: -5%; background: radial-gradient(circle, oklch(0.5 0.08 75), transparent 70%); opacity: 0.22; }
+.cta-glow .b { bottom: -25%; right: -5%; background: radial-gradient(circle, oklch(0.56 0.13 228), transparent 70%); opacity: 0.22; }
 .cta-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 90px); align-items: center; }
 .cta-title { font-family: var(--display); font-weight: 500; font-size: clamp(40px, 6vw, 96px); line-height: 0.98; letter-spacing: -0.015em; text-wrap: balance; }
 .cta-title em { font-style: italic; color: var(--terra-soft); }
 .cta-lead { color: var(--muted); font-size: 17px; line-height: 1.7; margin-top: 24px; max-width: 42ch; }
 
-.form { display: flex; flex-direction: column; gap: 16px; background: oklch(0.165 0.014 56 / 0.7); border: 1px solid var(--line); border-radius: 8px; padding: clamp(26px, 3vw, 40px); backdrop-filter: blur(8px); }
+.form { display: flex; flex-direction: column; gap: 16px; background: oklch(0.185 0.05 258 / 0.7); border: 1px solid var(--line); border-radius: 8px; padding: clamp(26px, 3vw, 40px); backdrop-filter: blur(8px); }
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
 .field input, .field select {
   font-family: var(--sans);
   font-size: 16px;
   color: var(--cream);
-  background: oklch(0.135 0.012 56 / 0.6);
+  background: oklch(0.155 0.045 258 / 0.6);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   padding: 14px 16px;
   transition: border-color 0.3s, background 0.3s;
 }
 .field input::placeholder { color: var(--faint); }
-.field input:focus, .field select:focus { outline: none; border-color: var(--terra-soft); background: oklch(0.165 0.014 56 / 0.8); }
+.field input:focus, .field select:focus { outline: none; border-color: var(--terra-soft); background: oklch(0.185 0.05 258 / 0.8); }
 .form .btn-primary { justify-content: center; width: 100%; margin-top: 6px; padding: 1.05em; }
 .form-note { font-size: 12.5px; color: var(--faint); text-align: center; line-height: 1.5; }
 .form-note a { color: var(--sand); text-decoration: underline; text-underline-offset: 3px; }

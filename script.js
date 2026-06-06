@@ -5,6 +5,42 @@
   "use strict";
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ============================================================
+     TELEGRAM — уведомления о заявках
+     ------------------------------------------------------------
+     Чтобы заявки приходили вам в Telegram, заполните 2 поля ниже:
+       1) BOT_TOKEN — токен бота из @BotFather (после /newbot)
+       2) CHAT_ID   — ваш числовой id (узнать у @userinfobot).
+                      ВАЖНО: сначала нажмите Start у своего бота!
+     Пока поля пустые — форма просто покажет «спасибо» без отправки.
+     ============================================================ */
+  const TELEGRAM = {
+    BOT_TOKEN: "",   // напр. "8123456789:AAH7s...your-token..."
+    CHAT_ID:   "",   // напр. "123456789"
+  };
+
+  async function sendToTelegram(data) {
+    if (!TELEGRAM.BOT_TOKEN || !TELEGRAM.CHAT_ID) {
+      console.warn("Telegram не настроен: укажите BOT_TOKEN и CHAT_ID в script.js");
+      return false;
+    }
+    const text =
+      "🎓 *Новая заявка — Result*\n\n" +
+      "👤 Имя: " + (data.name || "—") + "\n" +
+      "📞 Контакт: " + (data.phone || "—") + "\n" +
+      "🌍 Язык: " + (data.lang || "—") + "\n" +
+      "🕒 " + new Date().toLocaleString("ru-RU");
+    const url = "https://api.telegram.org/bot" + TELEGRAM.BOT_TOKEN + "/sendMessage";
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM.CHAT_ID, text, parse_mode: "Markdown" }),
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.description || "Telegram error");
+    return true;
+  }
+
   /* ---------- Запуск hero ---------- */
   window.addEventListener("load", () => {
     requestAnimationFrame(() => document.body.classList.add("loaded"));
@@ -191,19 +227,38 @@
   /* ---------- Форма ---------- */
   const form = document.getElementById("trialForm");
   if (form) {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const btn = form.querySelector("button");
       const original = btn.innerHTML;
-      btn.innerHTML = "Спасибо! Скоро свяжемся ✦";
-      btn.style.background = "var(--gold)";
+      const data = {
+        name: form.querySelector("#name")?.value.trim(),
+        phone: form.querySelector("#phone")?.value.trim(),
+        lang: form.querySelector("#lang")?.value,
+      };
+
       btn.disabled = true;
+      btn.innerHTML = "Отправляем…";
+
+      try {
+        const sent = await sendToTelegram(data);
+        btn.innerHTML = sent ? "Готово! Скоро свяжемся ✦" : "Спасибо! Скоро свяжемся ✦";
+        btn.style.background = "var(--gold)";
+        btn.style.color = "var(--ink-950)";
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        btn.innerHTML = "Ошибка — позвоните нам, пожалуйста";
+        btn.style.background = "oklch(0.6 0.18 25)";
+        btn.style.color = "#fff";
+      }
+
       setTimeout(() => {
         btn.innerHTML = original;
         btn.style.background = "";
+        btn.style.color = "";
         btn.disabled = false;
-        form.reset();
-      }, 3200);
+      }, 3600);
     });
   }
 
