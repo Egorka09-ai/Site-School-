@@ -107,10 +107,26 @@
 
   /* ---------- Мобильное меню ---------- */
   const burger = document.getElementById("burger");
-  if (burger) {
-    burger.addEventListener("click", () => {
-      // простое поведение: проскроллить к контактам
-      document.getElementById("contact").scrollIntoView({ behavior: "smooth", block: "start" });
+  const mobileMenu = document.getElementById("mobileMenu");
+  if (burger && mobileMenu) {
+    const setMenu = (open) => {
+      mobileMenu.hidden = !open;
+      burger.classList.toggle("open", open);
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+      burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+      document.body.classList.toggle("menu-open", open);
+    };
+    burger.addEventListener("click", () => setMenu(mobileMenu.hidden));
+    // любой переход по пункту закрывает меню
+    mobileMenu.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => setMenu(false))
+    );
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobileMenu.hidden) setMenu(false);
+    });
+    // если экран стал широким, меню больше не нужно
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 860 && !mobileMenu.hidden) setMenu(false);
     });
   }
 
@@ -217,11 +233,25 @@
   /* ---------- Форма ---------- */
   const statusBox = document.getElementById("formStatus");
 
-  function showStatus(kind, html) {
+  function showStatus(kind, nodes) {
     if (!statusBox) return;
     statusBox.className = "form-status form-status--" + kind;
-    statusBox.innerHTML = html;
+    statusBox.replaceChildren.apply(statusBox, nodes);
     statusBox.hidden = false;
+  }
+
+  function makeLink(cls, href, label) {
+    const a = document.createElement("a");
+    a.className = cls;
+    // setAttribute, а не склейка строк: имя с апострофом (О'Коннор)
+    // разорвало бы атрибут href при сборке разметки текстом.
+    a.setAttribute("href", href);
+    if (!href.startsWith("tel:")) {
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener");
+    }
+    a.textContent = label;
+    return a;
   }
 
   /* Запасной путь: собираем текст заявки и предлагаем отправить его
@@ -233,15 +263,24 @@
       "Контакт: " + (data.phone || "—") + "\n" +
       "Язык: " + (data.lang || "—");
     const wa = "https://wa.me/79823419077?text=" + encodeURIComponent(text);
-    showStatus(
-      "manual",
-      "<b>Остался один шаг.</b> Нажмите кнопку ниже — заявка уже собрана, " +
-      "останется только отправить её.<div class='form-status-actions'>" +
-      "<a class='btn btn-primary' href='" + wa + "' target='_blank' rel='noopener'>Отправить в WhatsApp <span class='arr'>→</span></a>" +
-      "<a class='btn btn-ghost' href='https://t.me/ksenya_mgn' target='_blank' rel='noopener'>Написать в Telegram</a>" +
-      "<a class='btn btn-ghost' href='tel:+79823419077'>Позвонить</a>" +
-      "</div>"
+
+    const lead = document.createElement("p");
+    const strong = document.createElement("b");
+    strong.textContent = "Остался один шаг.";
+    lead.appendChild(strong);
+    lead.appendChild(
+      document.createTextNode(" Нажмите кнопку ниже — заявка уже собрана, останется только отправить её.")
     );
+
+    const actions = document.createElement("div");
+    actions.className = "form-status-actions";
+    actions.append(
+      makeLink("btn btn-primary", wa, "Отправить в WhatsApp →"),
+      makeLink("btn btn-ghost", "https://t.me/ksenya_mgn", "Написать в Telegram"),
+      makeLink("btn btn-ghost", "tel:+79823419077", "Позвонить")
+    );
+
+    showStatus("manual", [lead, actions]);
   }
 
   const form = document.getElementById("trialForm");
@@ -262,7 +301,9 @@
       try {
         const sent = await sendToTelegram(data);
         if (sent) {
-          showStatus("ok", "Заявка отправлена. Свяжемся с вами в течение дня.");
+          const ok = document.createElement("p");
+          ok.textContent = "Заявка отправлена. Свяжемся с вами в течение дня.";
+          showStatus("ok", [ok]);
           btn.innerHTML = "Готово ✦";
           form.reset();
         } else {

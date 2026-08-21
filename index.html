@@ -17,6 +17,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#174F90" />
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23174F90'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='19' fill='%23ffffff'%3ER%3C/text%3E%3Ccircle cx='24' cy='22' r='2.6' fill='%23FF7A59'/%3E%3C/svg%3E" />
 
@@ -57,6 +58,7 @@
   </a>
   <div class="nav-links">
     <a href="#about">Школа</a>
+    <a href="#langs">Языки</a>
     <a href="#path">Уровни</a>
     <a href="#method">Метод</a>
     <a href="#pricing">Цены</a>
@@ -64,8 +66,26 @@
     <a href="#faq">Вопросы</a>
   </div>
   <a href="#contact" class="btn btn-primary nav-cta">Пробный урок <span class="arr">→</span></a>
-  <button class="nav-burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  <button class="nav-burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
+
+<!-- Мобильное меню: на узких экранах основная навигация скрыта,
+     поэтому здесь полноценный список, а не только кнопка. -->
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <a href="#about">Школа</a>
+  <a href="#langs">Языки</a>
+  <a href="#path">Уровни</a>
+  <a href="#method">Метод</a>
+  <a href="#pricing">Цены</a>
+  <a href="#team">Преподаватели</a>
+  <a href="#faq">Вопросы</a>
+  <a href="#map">Как найти</a>
+  <a href="#contact" class="btn btn-primary mobile-menu-cta">Пробный урок <span class="arr">→</span></a>
+  <div class="mobile-menu-contacts">
+    <a href="tel:+79823419077">+7 (982) 341-90-77</a>
+    <a href="https://t.me/ksenya_mgn" target="_blank" rel="noopener">Telegram</a>
+  </div>
+</div>
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
@@ -99,7 +119,7 @@
   </div>
 
   <div class="scroll-cue">
-    <span>Scroll</span>
+    <span>Листайте</span>
     <div class="track"></div>
   </div>
 </header>
@@ -257,7 +277,7 @@
       <div class="feat reveal">
         <div class="feat-no">03</div>
         <h3 class="feat-title">Мини-группы и индивидуально</h3>
-        <p class="feat-text">До 6 человек или один на один. Достаточно внимания каждому, достаточно практики для всех.</p>
+        <p class="feat-text">Небольшие группы или занятия один на один. Достаточно внимания каждому, достаточно практики для всех.</p>
       </div>
       <div class="feat reveal reveal-d1">
         <div class="feat-no">04</div>
@@ -333,21 +353,21 @@
 
     <div class="team-grid">
       <article class="teacher reveal">
-        <div class="ph has-photo"><img src="img/ksenia.jpg" alt="Ханина Ксения Александровна, директор школы Result" loading="lazy" /></div>
+        <div class="ph has-photo"><img src="img/ksenia.jpg" alt="Ханина Ксения Александровна, директор школы Result" width="640" height="640" loading="lazy" /></div>
         <div class="teacher-meta">
           <div class="teacher-name">Ханина Ксения Александровна<span>директор школы</span></div>
           <div class="teacher-lang">Result</div>
         </div>
       </article>
       <article class="teacher reveal reveal-d1">
-        <div class="ph has-photo"><img src="img/alesya.jpg" alt="Нектова Алеся Александровна, преподаватель английского и немецкого" loading="lazy" /></div>
+        <div class="ph has-photo"><img src="img/alesya.jpg" alt="Нектова Алеся Александровна, преподаватель английского и немецкого" width="640" height="640" loading="lazy" /></div>
         <div class="teacher-meta">
           <div class="teacher-name">Нектова Алеся Александровна<span>преподаватель</span></div>
           <div class="teacher-lang">EN · DE</div>
         </div>
       </article>
       <article class="teacher reveal reveal-d2">
-        <div class="ph has-photo"><img src="img/yulia.jpg" alt="Романова Юлия Андреевна, преподаватель английского и немецкого" loading="lazy" /></div>
+        <div class="ph has-photo"><img src="img/yulia.jpg" alt="Романова Юлия Андреевна, преподаватель английского и немецкого" width="800" height="600" loading="lazy" /></div>
         <div class="teacher-meta">
           <div class="teacher-name">Романова Юлия Андреевна<span>преподаватель</span></div>
           <div class="teacher-lang">EN · DE</div>
@@ -415,11 +435,11 @@
       <form class="form reveal reveal-d1" id="trialForm">
         <div class="field">
           <label for="name">Как вас зовут</label>
-          <input type="text" id="name" name="name" placeholder="Имя" required />
+          <input type="text" id="name" name="name" placeholder="Имя" autocomplete="name" required />
         </div>
         <div class="field">
           <label for="phone">Телефон или Telegram</label>
-          <input type="text" id="phone" name="phone" placeholder="+7 ___ ___ __ __" required />
+          <input type="tel" id="phone" name="phone" placeholder="+7 ___ ___ __ __" inputmode="tel" autocomplete="tel" required />
         </div>
         <div class="field">
           <label for="lang">Язык</label>
@@ -436,6 +456,17 @@
         <button type="submit" class="btn btn-primary">Записаться на пробный <span class="arr">→</span></button>
         <p class="form-note">Перезвоним в течение дня.</p>
         <div class="form-status" id="formStatus" hidden></div>
+        <noscript>
+          <div class="form-status">
+            <b>Форма работает через JavaScript, а он отключён.</b>
+            Напишите нам напрямую:
+            <div class="form-status-actions">
+              <a class="btn btn-primary" href="https://wa.me/79823419077" target="_blank" rel="noopener">WhatsApp</a>
+              <a class="btn btn-ghost" href="https://t.me/ksenya_mgn" target="_blank" rel="noopener">Telegram</a>
+              <a class="btn btn-ghost" href="tel:+79823419077">+7 (982) 341-90-77</a>
+            </div>
+          </div>
+        </noscript>
       </form>
     </div>
   </div>
@@ -476,10 +507,10 @@
       </div>
       <div class="foot-col">
         <h4>Языки</h4>
-        <a href="#contact">Английский</a>
-        <a href="#contact">Немецкий</a>
-        <a href="#contact">Для детей</a>
-        <a href="#contact">Онлайн</a>
+        <a href="#langs">Английский</a>
+        <a href="#langs">Немецкий</a>
+        <a href="#pricing">Форматы занятий</a>
+        <a href="#contact">Пробный урок</a>
       </div>
       <div class="foot-col foot-contacts">
         <h4>Контакты</h4>
