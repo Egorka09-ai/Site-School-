@@ -406,6 +406,28 @@ section { position: relative; z-index: 2; }
 .intro-side { color: var(--gray-500); font-size: 16px; line-height: 1.8; max-width: 40ch; }
 .intro-side p + p { margin-top: 1.2em; }
 
+/* Возрастной охват — школа берёт и дошкольников, и пенсионеров */
+.audience {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 16px 26px;
+  margin-top: clamp(36px, 4vw, 56px);
+}
+.audience-label {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--blue-600);
+}
+.audience-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.audience-pills span {
+  font-size: 14px; color: var(--gray-500);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 100px;
+  padding: 8px 17px;
+  transition: border-color 0.3s, color 0.3s;
+}
+.audience-pills span:hover { border-color: var(--blue-400); color: var(--gray-900); }
+
 /* Статистика */
 .stats {
   display: grid;
@@ -689,12 +711,36 @@ section { position: relative; z-index: 2; }
    ФУТЕР
    ============================================================ */
 .footer { border-top: 1px solid var(--line); padding: clamp(60px, 7vw, 100px) 0 40px; background: var(--blue-50); }
-.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+/* колонка контактов шире остальных — иначе адрес и график ломаются на две строки */
+.footer-top { display: grid; grid-template-columns: 1.3fr 0.9fr 0.9fr 1.5fr; gap: 40px; }
 .footer-brand .brand { font-size: 38px; }
 .footer-brand p { color: var(--gray-500); font-size: 14px; line-height: 1.7; max-width: 32ch; margin-top: 20px; }
 .foot-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 18px; }
 .foot-col a, .foot-col p { display: block; color: var(--gray-500); font-size: 14px; margin-bottom: 12px; transition: color 0.3s; }
 .foot-col a:hover { color: var(--blue-800); }
+.foot-contacts .fc-phone { font-size: 16px; color: var(--gray-900); margin-bottom: 10px; }
+.foot-contacts .fc-addr { white-space: nowrap; margin-bottom: 16px; }
+
+/* график двумя колонками: слева дни, справа время — не разъезжается */
+.hours {
+  display: grid; grid-template-columns: max-content max-content;
+  column-gap: 18px; row-gap: 6px;
+  font-size: 14px; margin-bottom: 22px;
+}
+.hours span { color: var(--gray-300); }
+.hours b { color: var(--gray-500); font-weight: 500; white-space: nowrap; }
+
+.social-icons { display: flex; gap: 12px; }
+.foot-col .social-icon {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(23, 79, 144, 0.18);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.social-icon svg { width: 38px; height: 38px; display: block; }
+.foot-col .social-icon:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(23, 79, 144, 0.30); }
+
 .footer-bottom {
   display: flex; align-items: center; justify-content: space-between;
   gap: 20px; flex-wrap: wrap;
@@ -759,6 +805,8 @@ section { position: relative; z-index: 2; }
   .hero-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
 }
 @media (max-width: 560px) {
+  /* на узком экране одна строка адреса уже не помещается — пусть переносится */
+  .foot-contacts .fc-addr { white-space: normal; }
   .stats { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .hero-cta { width: 100%; }
