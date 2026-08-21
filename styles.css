@@ -595,16 +595,19 @@ section { position: relative; z-index: 2; }
 .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2vw, 32px); }
 .teacher { position: relative; }
 .teacher .ph { aspect-ratio: 3/4; border-radius: var(--radius); overflow: hidden; }
+/* ФИО целиком по центру карточки: раньше имя жалось влево,
+   а языки — вправо, и с полными ФИО это разъезжалось */
 .teacher-meta {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 12px; margin-top: 18px; padding-bottom: 14px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  gap: 10px; margin-top: 18px; padding-bottom: 16px;
   border-bottom: 1.5px solid var(--line);
   transition: border-color 0.4s;
 }
 .teacher:hover .teacher-meta { border-color: var(--blue-400); }
 .teacher-name { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 1.8vw, 28px); line-height: 1.05; color: var(--gray-900); }
 .teacher-name span { display: block; font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--gray-500); margin-top: 8px; letter-spacing: 0.02em; }
-.teacher-lang { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--blue-600); padding-top: 6px; white-space: nowrap; }
+.teacher-lang { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--blue-600); white-space: nowrap; }
 
 .ph {
   position: relative;
@@ -714,18 +717,39 @@ section { position: relative; z-index: 2; }
 /* колонка контактов шире остальных — иначе адрес и график ломаются на две строки */
 .footer-top { display: grid; grid-template-columns: 1.3fr 0.9fr 0.9fr 1.5fr; gap: 40px; }
 .footer-brand .brand { font-size: 38px; }
-.footer-brand p { color: var(--gray-500); font-size: 14px; line-height: 1.7; max-width: 32ch; margin-top: 20px; }
-.foot-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 18px; }
-.foot-col a, .foot-col p { display: block; color: var(--gray-500); font-size: 14px; margin-bottom: 12px; transition: color 0.3s; }
+.footer-brand p { font-family: var(--sans); color: var(--gray-500); font-size: 14px; line-height: 1.6; max-width: 32ch; margin-top: 20px; }
+/* заголовки колонок были моношрифтом в самом светлом сером — терялись.
+   Тот же шрифт, что и остальной подвал, но тёмный, жирный и с подчёркиванием */
+.foot-col h4 {
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--gray-900);
+  display: inline-block;
+  margin-bottom: 20px;
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--blue-400);
+}
+/* один шрифт, один кегль, один интервал по всему подвалу */
+.foot-col a, .foot-col p {
+  display: block;
+  font-family: var(--sans);
+  color: var(--gray-500);
+  font-size: 14px; line-height: 1.6;
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
 .foot-col a:hover { color: var(--blue-800); }
-.foot-contacts .fc-phone { font-size: 16px; color: var(--gray-900); margin-bottom: 10px; }
-.foot-contacts .fc-addr { white-space: nowrap; margin-bottom: 16px; }
+.foot-contacts .fc-phone { font-weight: 600; color: var(--gray-900); }
+.foot-contacts .fc-addr { white-space: nowrap; }
 
 /* график двумя колонками: слева дни, справа время — не разъезжается */
 .hours {
   display: grid; grid-template-columns: max-content max-content;
-  column-gap: 18px; row-gap: 6px;
-  font-size: 14px; margin-bottom: 22px;
+  column-gap: 18px; row-gap: 10px;
+  font-family: var(--sans);
+  font-size: 14px; line-height: 1.6;
+  margin: 10px 0 22px;
 }
 .hours span { color: var(--gray-300); }
 .hours b { color: var(--gray-500); font-weight: 500; white-space: nowrap; }
@@ -742,15 +766,15 @@ section { position: relative; z-index: 2; }
 .foot-col .social-icon:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(23, 79, 144, 0.30); }
 
 .footer-bottom {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
   gap: 20px; flex-wrap: wrap;
   margin-top: clamp(50px, 6vw, 80px);
   padding-top: 30px;
   border-top: 1px solid var(--line);
-  font-size: 13px; color: var(--gray-300);
+  font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; color: var(--gray-500);
 }
-.footer-bottom .socials { display: flex; gap: 22px; }
-.footer-bottom .socials a:hover { color: var(--blue-600); }
 
 /* ============================================================
    REVEAL-АНИМАЦИИ
