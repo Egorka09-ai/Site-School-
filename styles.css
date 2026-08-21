@@ -347,7 +347,9 @@ section { position: relative; z-index: 2; }
   display: flex;
   gap: 3.5rem;
   width: max-content;
-  animation: marquee 38s linear infinite;
+  /* длительность пропорциональна длине ленты: было 6 фраз за 38s,
+     стало 15 — иначе строка поехала бы в 2,5 раза быстрее */
+  animation: marquee 95s linear infinite;
 }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee-track span {
