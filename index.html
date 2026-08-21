@@ -3,19 +3,51 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Result — школа иностранных языков и дополнительного образования</title>
+<title>Школа иностранных языков в Магнитогорске — Result</title>
 <meta name="description" content="Result — школа иностранных языков и дополнительного образования в Магнитогорске. Английский и немецкий для любого возраста: от дошкольников до пенсионеров." />
+
+<link rel="canonical" href="https://result-school.ru/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Result" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:url" content="https://result-school.ru/" />
+<meta property="og:title" content="Школа иностранных языков в Магнитогорске — Result" />
+<meta property="og:description" content="Английский и немецкий для любого возраста: от дошкольников до пенсионеров. Мини-группы, индивидуально и онлайн." />
+<meta property="og:image" content="https://result-school.ru/img/og-cover.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23174F90'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='19' fill='%23ffffff'%3ER%3C/text%3E%3Ccircle cx='24' cy='22' r='2.6' fill='%23FF7A59'/%3E%3C/svg%3E" />
+
 <link rel="stylesheet" href="styles.css" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LanguageSchool",
+  "name": "Result",
+  "description": "Школа иностранных языков и дополнительного образования",
+  "url": "https://result-school.ru/",
+  "telephone": "+7 982 341-90-77",
+  "foundingDate": "2014",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Магнитогорск",
+    "streetAddress": "ул. Металлургов, 9",
+    "addressCountry": "RU"
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "opens": "09:00",
+    "closes": "21:00"
+  }],
+  "sameAs": ["https://t.me/ksenya_mgn", "https://vk.ru/ksenya_khanina"]
+}
+</script>
 </head>
 <body>
-
-<template id="__bundler_thumbnail">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-    <rect width="100" height="100" fill="#0b1f4d" />
-    <text x="50" y="60" font-family="Georgia, serif" font-size="42" font-weight="700" fill="#ffffff" text-anchor="middle">R</text>
-    <circle cx="72" cy="58" r="4" fill="#3ea8ff" />
-  </svg>
-</template>
 
 <!-- ================= НАВИГАЦИЯ ================= -->
 <nav class="nav" id="nav">
@@ -27,8 +59,9 @@
     <a href="#about">Школа</a>
     <a href="#path">Уровни</a>
     <a href="#method">Метод</a>
+    <a href="#pricing">Цены</a>
     <a href="#team">Преподаватели</a>
-    <a href="#reviews">Отзывы</a>
+    <a href="#faq">Вопросы</a>
   </div>
   <a href="#contact" class="btn btn-primary nav-cta">Пробный урок <span class="arr">→</span></a>
   <button class="nav-burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
@@ -41,7 +74,6 @@
     <span class="glow-2"></span>
     <span class="glow-3"></span>
   </div>
-  <div class="hero-particles" id="particles"></div>
 
   <div class="hero-inner">
     <div class="hero-eyebrow"><span class="eyebrow">Языки и доп. образование · Магнитогорск</span></div>
@@ -110,12 +142,13 @@
         <div class="stat-label">лет учим говорить, а не молчать на экзамене</div>
       </div>
       <div class="stat reveal reveal-d1">
-        <div class="stat-num"><span data-count="1200">0</span><span class="suf">+</span></div>
-        <div class="stat-label">учеников дошли до своего уровня</div>
+        <div class="stat-num"><span data-count="3">0</span></div>
+        <div class="stat-label">преподавателя в команде</div>
       </div>
+      <!-- ЗАПОЛНИТЬ: сколько учеников прошло через школу -->
       <div class="stat reveal reveal-d2">
-        <div class="stat-num"><span data-count="94">0</span><span class="suf">%</span></div>
-        <div class="stat-label">продолжают учиться после пробного</div>
+        <div class="stat-num"><span class="stat-empty">—</span></div>
+        <div class="stat-label">учеников дошли до своего уровня</div>
       </div>
     </div>
   </div>
@@ -139,7 +172,6 @@
         </div>
         <div>
           <p class="lang-desc">Разговорный, деловой, для путешествий и экзаменов IELTS / TOEFL. Говорим с первого занятия.</p>
-          <div class="lang-levels"><b>A1</b><b>A2</b><b>B1</b><b>B2</b><b>C1</b></div>
           <span class="lang-link">Подобрать программу <span class="arr">→</span></span>
         </div>
       </a>
@@ -152,7 +184,6 @@
         </div>
         <div>
           <p class="lang-desc">Для учёбы, работы и переезда. Грамматика без страха, живая речь и подготовка к Goethe / TestDaF.</p>
-          <div class="lang-levels"><b>A1</b><b>A2</b><b>B1</b><b>B2</b><b>C1</b></div>
           <span class="lang-link">Подобрать программу <span class="arr">→</span></span>
         </div>
       </a>
@@ -223,27 +254,71 @@
         <h3 class="feat-title">Понятная траектория</h3>
         <p class="feat-text">Каждый видит, где он сейчас и что будет дальше. Прогресс измерим — по шкале CEFR от A1 до C1.</p>
       </div>
-      <div class="feat reveal reveal-d2">
-        <div class="feat-no">03</div>
-        <h3 class="feat-title">Живые преподаватели</h3>
-        <p class="feat-text">Не роботы по учебнику. Команда, которая любит язык и умеет влюбить в него вас — терпеливо и с юмором.</p>
-      </div>
       <div class="feat reveal">
-        <div class="feat-no">04</div>
+        <div class="feat-no">03</div>
         <h3 class="feat-title">Мини-группы и индивидуально</h3>
         <p class="feat-text">До 6 человек или один на один. Достаточно внимания каждому, достаточно практики для всех.</p>
       </div>
       <div class="feat reveal reveal-d1">
-        <div class="feat-no">05</div>
+        <div class="feat-no">04</div>
         <h3 class="feat-title">Очно и онлайн</h3>
         <p class="feat-text">Удобный формат под ваш ритм. Один стандарт качества — в классе и на экране.</p>
       </div>
-      <div class="feat reveal reveal-d2">
-        <div class="feat-no">06</div>
-        <h3 class="feat-title">Результат под подпись</h3>
-        <p class="feat-text">Мы ставим цель вместе и доводим до неё: экзамен, переезд, работа или свободный разговор в отпуске.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ФОРМАТЫ И ЦЕНЫ =================
+     ЗАПОЛНИТЬ: цены, размер групп, длительность и частоту занятий.
+     Прочерк «—» показывается там, где данных пока нет.
+     ================================================== -->
+<section class="pricing section" id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Форматы и цены</span>
+      <h2 class="section-title">Как проходят <em>занятия</em></h2>
+      <p class="section-sub">Выберите формат под свой ритм и бюджет. На пробном уроке подскажем, какой подойдёт именно вам.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card reveal">
+        <div class="price-tag">Мини-группа</div>
+        <div class="price-val"><span class="price-empty">—</span> <small>₽ / занятие</small></div>
+        <dl class="price-list">
+          <dt>Человек в группе</dt><dd>—</dd>
+          <dt>Длительность</dt><dd>—</dd>
+          <dt>Занятий в неделю</dt><dd>—</dd>
+        </dl>
+        <p class="price-note">Живое общение с одногруппниками и достаточно внимания каждому.</p>
+        <a href="#contact" class="btn btn-ghost">Записаться <span class="arr">→</span></a>
+      </div>
+
+      <div class="price-card price-card--accent reveal reveal-d1">
+        <div class="price-tag">Индивидуально</div>
+        <div class="price-val"><span class="price-empty">—</span> <small>₽ / занятие</small></div>
+        <dl class="price-list">
+          <dt>Человек в группе</dt><dd>1</dd>
+          <dt>Длительность</dt><dd>—</dd>
+          <dt>Занятий в неделю</dt><dd>—</dd>
+        </dl>
+        <p class="price-note">Программа и темп полностью под вашу цель и расписание.</p>
+        <a href="#contact" class="btn btn-primary">Записаться <span class="arr">→</span></a>
+      </div>
+
+      <div class="price-card reveal reveal-d2">
+        <div class="price-tag">Онлайн</div>
+        <div class="price-val"><span class="price-empty">—</span> <small>₽ / занятие</small></div>
+        <dl class="price-list">
+          <dt>Формат</dt><dd>—</dd>
+          <dt>Длительность</dt><dd>—</dd>
+          <dt>Занятий в неделю</dt><dd>—</dd>
+        </dl>
+        <p class="price-note">Тот же стандарт, что и в классе — из любой точки.</p>
+        <a href="#contact" class="btn btn-ghost">Записаться <span class="arr">→</span></a>
       </div>
     </div>
+
+    <p class="price-foot reveal">Первый пробный урок — бесплатно. На нём определим уровень и подберём формат.</p>
   </div>
 </section>
 
@@ -282,50 +357,46 @@
   </div>
 </section>
 
-<!-- ================= ОТЗЫВЫ ================= -->
-<section class="reviews section" id="reviews">
+<!-- ================= ВОПРОСЫ =================
+     ЗАПОЛНИТЬ: ответы с прочерком «—» ждут ваших данных.
+     ============================================ -->
+<section class="faq section" id="faq">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Истории учеников</span>
-      <h2 class="section-title">Результат, который <em>слышно</em></h2>
+      <span class="eyebrow">Частые вопросы</span>
+      <h2 class="section-title">Что обычно <em>спрашивают</em></h2>
     </div>
 
-    <div class="review-grid">
-      <figure class="review reveal">
-        <div class="quote-mark">”</div>
-        <p>Пришла с нулём и страхом сказать хоть слово. Через год — собеседование на английском и оффер. Это не магия, а система Result.</p>
-        <figcaption class="review-who">
-          <div class="ph av" data-label=" "></div>
-          <div><b>Ольга К.</b><small>английский · с A1 до B2</small></div>
-        </figcaption>
-      </figure>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>С какого возраста вы берёте детей?</summary>
+        <p>Занимаемся с дошкольниками, школьниками, студентами и взрослыми — верхней границы нет. Программа и темп подбираются под возраст, а не наоборот.</p>
+      </details>
 
-      <figure class="review reveal reveal-d1">
-        <div class="quote-mark">”</div>
-        <p>Готовился к переезду в Германию. Немецкий «с нуля и логично» — именно так, как обещали. Сдал TestDaF с первого раза.</p>
-        <figcaption class="review-who">
-          <div class="ph av" data-label=" "></div>
-          <div><b>Игорь М.</b><small>немецкий · TestDaF</small></div>
-        </figcaption>
-      </figure>
+      <details class="faq-item">
+        <summary>Нужно ли что-то знать перед первым занятием?</summary>
+        <p>Нет. Многие приходят с полного нуля. На бесплатном пробном уроке определим уровень и покажем, с чего начнётся ваш путь.</p>
+      </details>
 
-      <figure class="review reveal">
-        <div class="quote-mark">”</div>
-        <p>Лучшее в Result — преподаватели. Никакого давления, только поддержка. Сын впервые сам просит «ещё урок».</p>
-        <figcaption class="review-who">
-          <div class="ph av" data-label=" "></div>
-          <div><b>Наталья В.</b><small>родитель · группа A2</small></div>
-        </figcaption>
-      </figure>
+      <details class="faq-item">
+        <summary>Что будет, если я пропущу занятие?</summary>
+        <p>—</p>
+      </details>
 
-      <figure class="review reveal reveal-d1">
-        <div class="quote-mark">”</div>
-        <p>Думала, в моём возрасте уже поздно. Оказалось — самое время. Теперь свободно болтаю в путешествиях и не молчу.</p>
-        <figcaption class="review-who">
-          <div class="ph av" data-label=" "></div>
-          <div><b>Светлана Р.</b><small>английский · разговорный B1</small></div>
-        </figcaption>
-      </figure>
+      <details class="faq-item">
+        <summary>Нужно ли покупать учебники?</summary>
+        <p>—</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Можно ли заниматься онлайн, если я не из Магнитогорска?</summary>
+        <p>Да. Онлайн-занятия идут по той же программе и с теми же преподавателями, что и в классе.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Как проходит оплата?</summary>
+        <p>—</p>
+      </details>
     </div>
   </div>
 </section>
@@ -358,9 +429,32 @@
             <option>Ещё не решил(а)</option>
           </select>
         </div>
+        <label class="consent">
+          <input type="checkbox" id="consent" name="consent" required />
+          <span>Согласен(на) на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a></span>
+        </label>
         <button type="submit" class="btn btn-primary">Записаться на пробный <span class="arr">→</span></button>
-        <p class="form-note">Нажимая кнопку, вы соглашаетесь с <a href="#">политикой конфиденциальности</a>. Перезвоним в течение дня.</p>
+        <p class="form-note">Перезвоним в течение дня.</p>
+        <div class="form-status" id="formStatus" hidden></div>
       </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КАК НАС НАЙТИ ================= -->
+<section class="map-section section" id="map">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Как нас найти</span>
+      <h2 class="section-title">Магнитогорск, <em>Металлургов 9</em></h2>
+      <p class="section-sub">Пн–Сб с 09:00 до 21:00. Воскресенье — выходной.</p>
+    </div>
+
+    <div class="map-box reveal">
+      <iframe
+        src="https://yandex.ru/map-widget/v1/?text=Магнитогорск%2C%20улица%20Металлургов%2C%209&z=17"
+        width="100%" height="420" frameborder="0" allowfullscreen="true"
+        loading="lazy" title="Карта: Магнитогорск, улица Металлургов, 9"></iframe>
     </div>
   </div>
 </section>

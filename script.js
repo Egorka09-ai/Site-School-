@@ -8,11 +8,19 @@
   /* ============================================================
      TELEGRAM — уведомления о заявках
      ------------------------------------------------------------
-     Чтобы заявки приходили вам в Telegram, заполните 2 поля ниже:
-       1) BOT_TOKEN — токен бота из @BotFather (после /newbot)
-       2) CHAT_ID   — ваш числовой id (узнать у @userinfobot).
-                      ВАЖНО: сначала нажмите Start у своего бота!
-     Пока поля пустые — форма просто покажет «спасибо» без отправки.
+     ⚠️ ВНИМАНИЕ. Этот файл открыт всему интернету: всё, что здесь
+     написано, любой посетитель прочитает через «Просмотр кода».
+     Вписанный сюда токен бота станет публичным, и управлять ботом
+     сможет кто угодно. НЕ вставляйте сюда рабочий токен.
+
+     Безопасный способ — принимать заявки через посредника, который
+     хранит токен у себя: Formspree, Google Форма или небольшой бот
+     на бесплатном хостинге. Тогда сюда попадает только адрес
+     обработчика, а не секрет.
+
+     Пока поля пустые, форма НЕ делает вид, что заявка отправлена:
+     она показывает готовый текст обращения и кнопки «отправить в
+     WhatsApp / написать в Telegram / позвонить». Заявка не теряется.
      ============================================================ */
   const TELEGRAM = {
     BOT_TOKEN: "",   // напр. "8123456789:AAH7s...your-token..."
@@ -203,28 +211,39 @@
     }, { passive: true });
   }
 
-  /* ---------- Плавающие слова-приветствия ---------- */
-  const particles = document.getElementById("particles");
-  if (particles && !reduce) {
-    const words = ["Hello", "Hallo", "Привет", "Guten Tag", "Let's talk", "Sprich!", "Yes!", "Genau", "речь", "слово", "freedom", "Freiheit"];
-    const COUNT = 10;
-    for (let i = 0; i < COUNT; i++) {
-      const s = document.createElement("span");
-      s.textContent = words[i % words.length];
-      s.style.left = Math.random() * 96 + "%";
-      s.style.top = 60 + Math.random() * 50 + "%";
-      s.style.fontSize = 15 + Math.random() * 26 + "px";
-      const dur = 14 + Math.random() * 16;
-      s.style.animationDuration = dur + "s";
-      s.style.animationDelay = -Math.random() * dur + "s";
-      particles.appendChild(s);
-    }
-  }
-
   /* ---------- Цикличное приветствие (если есть) ---------- */
   // зарезервировано: точка-акцент пульсирует тонко через CSS-неон не требуется
 
   /* ---------- Форма ---------- */
+  const statusBox = document.getElementById("formStatus");
+
+  function showStatus(kind, html) {
+    if (!statusBox) return;
+    statusBox.className = "form-status form-status--" + kind;
+    statusBox.innerHTML = html;
+    statusBox.hidden = false;
+  }
+
+  /* Запасной путь: собираем текст заявки и предлагаем отправить его
+     напрямую в WhatsApp или Telegram. Ничего не теряется. */
+  function showFallback(data) {
+    const text =
+      "Здравствуйте! Хочу записаться на пробный урок.\n" +
+      "Имя: " + (data.name || "—") + "\n" +
+      "Контакт: " + (data.phone || "—") + "\n" +
+      "Язык: " + (data.lang || "—");
+    const wa = "https://wa.me/79823419077?text=" + encodeURIComponent(text);
+    showStatus(
+      "manual",
+      "<b>Остался один шаг.</b> Нажмите кнопку ниже — заявка уже собрана, " +
+      "останется только отправить её.<div class='form-status-actions'>" +
+      "<a class='btn btn-primary' href='" + wa + "' target='_blank' rel='noopener'>Отправить в WhatsApp <span class='arr'>→</span></a>" +
+      "<a class='btn btn-ghost' href='https://t.me/ksenya_mgn' target='_blank' rel='noopener'>Написать в Telegram</a>" +
+      "<a class='btn btn-ghost' href='tel:+79823419077'>Позвонить</a>" +
+      "</div>"
+    );
+  }
+
   const form = document.getElementById("trialForm");
   if (form) {
     form.addEventListener("submit", async (e) => {
@@ -242,21 +261,24 @@
 
       try {
         const sent = await sendToTelegram(data);
-        btn.innerHTML = sent ? "Готово! Скоро свяжемся ✦" : "Спасибо! Скоро свяжемся ✦";
-        btn.style.background = "var(--gold)";
-        btn.style.color = "var(--ink-950)";
-        form.reset();
+        if (sent) {
+          showStatus("ok", "Заявка отправлена. Свяжемся с вами в течение дня.");
+          btn.innerHTML = "Готово ✦";
+          form.reset();
+        } else {
+          // Автоотправка не настроена — честно говорим об этом и даём прямые
+          // каналы, вместо того чтобы показывать «спасибо» и потерять заявку.
+          showFallback(data);
+          btn.innerHTML = original;
+        }
       } catch (err) {
         console.error(err);
-        btn.innerHTML = "Ошибка — позвоните нам, пожалуйста";
-        btn.style.background = "oklch(0.6 0.18 25)";
-        btn.style.color = "#fff";
+        showFallback(data);
+        btn.innerHTML = original;
       }
 
       setTimeout(() => {
         btn.innerHTML = original;
-        btn.style.background = "";
-        btn.style.color = "";
         btn.disabled = false;
       }, 3600);
     });
