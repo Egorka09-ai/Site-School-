@@ -433,7 +433,7 @@ section { position: relative; z-index: 2; }
 /* Статистика */
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   margin-top: clamp(60px, 8vw, 120px);
   background: var(--line);
@@ -824,7 +824,8 @@ section { position: relative; z-index: 2; }
   .lang-grid { grid-template-columns: 1fr; }
   .feat-grid { grid-template-columns: 1fr; }
   .review-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr 1fr; }
+  /* три показателя в две колонки дают висящий третий — лучше сразу в столбик */
+  .stats { grid-template-columns: 1fr; }
   .stairs { grid-template-columns: 1fr; min-height: unset; gap: 10px; }
   .step { min-height: unset !important; padding: 22px; }
   .step::before { display: none; }
