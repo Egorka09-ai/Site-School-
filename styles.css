@@ -601,6 +601,10 @@ section { position: relative; z-index: 2; }
   background: rgba(255, 255, 255, 0.85);
   text-align: center; max-width: 80%;
 }
+.ph.has-photo { background-image: none; }
+.ph.has-photo::after { content: none; }
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
 .teacher .ph { transition: transform 0.7s var(--ease-out); }
 .teacher:hover .ph { transform: scale(1.012); }
 
