@@ -888,16 +888,21 @@ body.menu-open { overflow: hidden; }
   background: linear-gradient(150deg, var(--blue-50) 0%, var(--white) 55%, var(--blue-100) 100%);
 }
 .notfound .wrap { max-width: 720px; padding-inline: 0; }
+/* число — фон композиции, а не заголовок: сжатый line-height при
+   крупном кегле налезал на строку ниже, поэтому даём ему полную
+   высоту строки и заметный отступ */
 .notfound-code {
   font-family: var(--display); font-weight: 700;
-  font-size: clamp(80px, 14vw, 170px); line-height: 0.9;
-  letter-spacing: -0.03em; color: var(--blue-800);
-  margin: 18px 0 6px;
+  font-size: clamp(68px, 10vw, 124px); line-height: 1;
+  letter-spacing: -0.02em; color: var(--blue-800);
+  opacity: 0.22;
+  margin: 20px 0 0;
 }
 .notfound-title {
   font-family: var(--display); font-weight: 600;
-  font-size: clamp(26px, 4vw, 44px); line-height: 1.1;
-  color: var(--gray-900); margin-bottom: 18px;
+  font-size: clamp(30px, 4.4vw, 52px); line-height: 1.15;
+  color: var(--gray-900);
+  margin: 14px 0 20px;
 }
 .notfound-title em { font-style: italic; color: var(--blue-600); }
 .notfound-lead { font-size: 16px; line-height: 1.75; color: var(--gray-500); max-width: 52ch; }
