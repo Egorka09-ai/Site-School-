@@ -457,7 +457,8 @@ body.menu-open { overflow: hidden; }
 /* Статистика */
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* остался один показатель — растягиваем его на всю ширину и центрируем */
+  grid-template-columns: 1fr;
   gap: 1px;
   margin-top: clamp(60px, 8vw, 120px);
   background: var(--line);
@@ -469,9 +470,10 @@ body.menu-open { overflow: hidden; }
   background: var(--blue-50);
   padding: clamp(28px, 3vw, 44px) clamp(22px, 2.4vw, 36px);
   transition: background 0.5s;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 6px;
 }
 .stat:hover { background: var(--blue-100); }
-.stat-empty { color: var(--gray-500); }
 .stat-num {
   font-family: var(--display);
   font-weight: 600;
@@ -716,37 +718,27 @@ body.menu-open { overflow: hidden; }
 .form-note a { color: rgba(255,255,255,0.65); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ============================================================
-   ФОРМАТЫ И ЦЕНЫ
+   ЛЕТНИЙ ЛАГЕРЬ
    ============================================================ */
-.pricing { background: var(--blue-50); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
-.price-card {
-  display: flex; flex-direction: column;
+.camp { background: var(--blue-50); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.camp-inner {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(30px, 5vw, 70px);
+  align-items: center;
+}
+.camp-text p { font-size: 16px; line-height: 1.8; color: var(--gray-500); max-width: 54ch; margin-top: 18px; }
+.camp-text .camp-accent { color: var(--gray-900); font-weight: 500; }
+.camp-text .btn { margin-top: 30px; }
+
+.camp-marks { display: flex; flex-wrap: wrap; gap: 10px; }
+.camp-marks span {
+  font-size: 14px; color: var(--blue-800);
   background: var(--white);
   border: 1.5px solid var(--line);
-  border-radius: var(--radius);
-  padding: clamp(26px, 3vw, 38px);
-  transition: transform 0.4s var(--ease-out), border-color 0.4s, box-shadow 0.4s;
+  border-radius: 100px;
+  padding: 10px 18px;
 }
-.price-card:hover { transform: translateY(-6px); border-color: var(--blue-400); box-shadow: 0 14px 44px rgba(23, 79, 144, 0.10); }
-.price-card--accent { border-color: var(--blue-600); box-shadow: 0 10px 34px rgba(23, 79, 144, 0.10); }
-.price-tag {
-  font-family: var(--sans); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue-800);
-}
-.price-val {
-  font-family: var(--display); font-weight: 700;
-  font-size: clamp(34px, 3.6vw, 52px); line-height: 1;
-  color: var(--gray-900); margin: 16px 0 24px;
-}
-.price-val small { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--gray-500); }
-.price-empty { color: var(--gray-500); }
-.price-list { display: grid; grid-template-columns: 1fr auto; gap: 10px 16px; font-size: 14px; }
-.price-list dt { color: var(--gray-500); }
-.price-list dd { color: var(--gray-900); font-weight: 500; text-align: right; }
-.price-note { margin: 22px 0 26px; font-size: 14px; line-height: 1.6; color: var(--gray-500); }
-.price-card .btn { align-self: flex-start; margin-top: auto; }
-.price-foot { margin-top: clamp(30px, 4vw, 48px); text-align: center; font-size: 15px; color: var(--gray-500); }
 
 /* ============================================================
    ВОПРОСЫ И ОТВЕТЫ
@@ -973,7 +965,6 @@ body.menu-open { overflow: hidden; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
   .footer-brand { grid-column: 1 / -1; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
-  .price-grid { grid-template-columns: 1fr; }
   .cta-inner { grid-template-columns: 1fr; }
 }
 @media (max-width: 860px) {
@@ -982,7 +973,7 @@ body.menu-open { overflow: hidden; }
   .intro-grid { grid-template-columns: 1fr; gap: 40px; align-items: start; }
   .lang-grid { grid-template-columns: 1fr; }
   .feat-grid { grid-template-columns: 1fr; }
-  .price-grid { grid-template-columns: 1fr; }
+  .camp-inner { grid-template-columns: 1fr; }
   /* три показателя в две колонки дают висящий третий — лучше сразу в столбик */
   .stats { grid-template-columns: 1fr; }
   .stairs { grid-template-columns: 1fr; min-height: unset; gap: 10px; }
