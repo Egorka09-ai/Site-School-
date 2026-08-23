@@ -21,7 +21,10 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23174F90'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='19' fill='%23ffffff'%3ER%3C/text%3E%3Ccircle cx='24' cy='22' r='2.6' fill='%23FF7A59'/%3E%3C/svg%3E" />
 
-<link rel="stylesheet" href="styles.css?v=20260823e" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="styles.css?v=20260823f" />
 
 <script type="application/ld+json">
 {
@@ -48,14 +51,26 @@
   "sameAs": ["https://t.me/ksenya_mgn", "https://vk.ru/ksenya_khanina"]
 }
 </script>
+<noscript>
+  <!-- Содержимое по умолчанию невидимо и раскрывается скриптом.
+       Если script.js не загрузился, страница ниже первого экрана
+       осталась бы пустой — здесь показываем всё сразу. -->
+  <style>
+    .reveal, .step { opacity: 1 !important; transform: none !important; }
+    .hero-eyebrow, .hero-lead, .hero-cta { opacity: 1 !important; transform: none !important; }
+    .hero-title .line > span { transform: none !important; }
+  </style>
+</noscript>
 </head>
 <body>
+
+<a class="skip-link" href="#about">Перейти к содержимому</a>
 
 <!-- ================= НАВИГАЦИЯ ================= -->
 <nav class="nav" id="nav">
   <a href="#top" class="brand">
     Result<span class="dot">.</span>
-    <small>EN · DE</small>
+    <small lang="en">EN · DE</small>
   </a>
   <div class="nav-links">
     <a href="#about">Школа</a>
@@ -174,8 +189,8 @@
       <div class="lang-card reveal">
         <span class="flag-word">A</span>
         <div>
-          <div class="lang-tag">English</div>
-          <div class="lang-name">Английский<span>language of the world</span></div>
+          <div class="lang-tag" lang="en">English</div>
+          <div class="lang-name">Английский<span lang="en">language of the world</span></div>
         </div>
         <div>
           <p class="lang-desc">Разговорный, деловой, для путешествий и экзаменов IELTS / TOEFL. Говорим с первого занятия.</p>
@@ -185,8 +200,8 @@
       <div class="lang-card reveal reveal-d1">
         <span class="flag-word">D</span>
         <div>
-          <div class="lang-tag">Deutsch</div>
-          <div class="lang-name">Немецкий<span>klar und logisch</span></div>
+          <div class="lang-tag" lang="de">Deutsch</div>
+          <div class="lang-name">Немецкий<span lang="de">klar und logisch</span></div>
         </div>
         <div>
           <p class="lang-desc">Для учёбы, работы и переезда. Грамматика без страха и живая речь с первых занятий.</p>
@@ -208,27 +223,27 @@
     <div class="stairs" id="stairs">
       <div class="step">
         <div class="step-code">A1</div>
-        <div class="step-name">Beginner</div>
+        <div class="step-name" lang="en">Beginner</div>
         <div class="step-desc">Первые фразы, знакомство, простые диалоги о себе.</div>
       </div>
       <div class="step">
         <div class="step-code">A2</div>
-        <div class="step-name">Elementary</div>
+        <div class="step-name" lang="en">Elementary</div>
         <div class="step-desc">Бытовые темы, прошлое и будущее, уверенность в простом.</div>
       </div>
       <div class="step">
         <div class="step-code">B1</div>
-        <div class="step-name">Intermediate</div>
+        <div class="step-name" lang="en">Intermediate</div>
         <div class="step-desc">Свободные разговоры, путешествия, работа, мнения.</div>
       </div>
       <div class="step">
         <div class="step-code">B2</div>
-        <div class="step-name">Upper-Inter.</div>
+        <div class="step-name" lang="en">Upper-Inter.</div>
         <div class="step-desc">Беглая речь, нюансы, переговоры и экзамены.</div>
       </div>
       <div class="step">
         <div class="step-code">C1</div>
-        <div class="step-name">Advanced</div>
+        <div class="step-name" lang="en">Advanced</div>
         <div class="step-desc">Свободное владение. Думаете и шутите на языке.</div>
       </div>
     </div>
@@ -286,7 +301,7 @@
 <section class="team section" id="team">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Teachers of Result</span>
+      <span class="eyebrow" lang="en">Teachers of Result</span>
       <h2 class="section-title">Люди, которые <em>учат говорить</em></h2>
       <p class="section-sub">Команда, ради которой ученики остаются. Опытные, тёплые и по-настоящему увлечённые языком.</p>
     </div>
@@ -296,21 +311,21 @@
         <div class="ph has-photo"><img src="img/ksenia.jpg" alt="Ханина Ксения Александровна, преподаватель английского и немецкого" width="640" height="640" loading="lazy" /></div>
         <div class="teacher-meta">
           <div class="teacher-name">Ханина Ксения Александровна<span>преподаватель</span></div>
-          <div class="teacher-lang">EN · DE</div>
+          <div class="teacher-lang" lang="en">EN · DE</div>
         </div>
       </article>
       <article class="teacher reveal reveal-d1">
         <div class="ph has-photo"><img src="img/alesya.jpg" alt="Нектова Алеся Александровна, преподаватель английского и немецкого" width="640" height="640" loading="lazy" /></div>
         <div class="teacher-meta">
           <div class="teacher-name">Нектова Алеся Александровна<span>преподаватель</span></div>
-          <div class="teacher-lang">EN · DE</div>
+          <div class="teacher-lang" lang="en">EN · DE</div>
         </div>
       </article>
       <article class="teacher reveal reveal-d2">
         <div class="ph has-photo"><img src="img/yulia.jpg" alt="Романова Юлия Андреевна, преподаватель английского и немецкого" width="647" height="800" loading="lazy" /></div>
         <div class="teacher-meta">
           <div class="teacher-name">Романова Юлия Андреевна<span>преподаватель</span></div>
-          <div class="teacher-lang">EN · DE</div>
+          <div class="teacher-lang" lang="en">EN · DE</div>
         </div>
       </article>
     </div>
@@ -477,7 +492,8 @@
 
     <div class="map-box reveal">
       <iframe
-        src="https://yandex.ru/map-widget/v1/?text=Магнитогорск%2C%20улица%20Металлургов%2C%209&z=17"
+        src="https://yandex.ru/map-widget/v1/?text=Магнитогорск%2C%20улица%20Металлургов%2C%209&amp;z=17"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
         width="100%" height="420" frameborder="0" allowfullscreen="true"
         loading="lazy" title="Карта: Магнитогорск, улица Металлургов, 9"></iframe>
     </div>
@@ -550,6 +566,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=20260823e"></script>
+<script src="script.js?v=20260823f"></script>
 </body>
 </html>

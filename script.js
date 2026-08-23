@@ -75,7 +75,6 @@
   function revealEverything() {
     document.body.classList.add("loaded", "no-anim");
     document.querySelectorAll(".reveal, .step").forEach((el) => el.classList.add("in"));
-    document.querySelectorAll(".intro-statement .w").forEach((w) => (w.style.opacity = "1"));
   }
   let failsafeRan = false;
   function checkVisibility() {
@@ -106,12 +105,33 @@
   const burger = document.getElementById("burger");
   const mobileMenu = document.getElementById("mobileMenu");
   if (burger && mobileMenu) {
+    // overflow:hidden на body не держит прокрутку в iOS Safari, поэтому
+    // фиксируем страницу и запоминаем позицию, чтобы вернуть её при закрытии
+    let savedScroll = 0;
+    const lockScroll = (lock) => {
+      if (lock) {
+        savedScroll = window.scrollY;
+        document.body.style.top = -savedScroll + "px";
+        document.body.classList.add("menu-open");
+      } else {
+        document.body.classList.remove("menu-open");
+        document.body.style.top = "";
+        window.scrollTo(0, savedScroll);
+      }
+    };
+
     const setMenu = (open) => {
       mobileMenu.hidden = !open;
       burger.classList.toggle("open", open);
       burger.setAttribute("aria-expanded", open ? "true" : "false");
       burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
-      document.body.classList.toggle("menu-open", open);
+      lockScroll(open);
+      if (open) {
+        const first = mobileMenu.querySelector("a");
+        if (first) first.focus();
+      } else {
+        burger.focus();
+      }
     };
     burger.addEventListener("click", () => setMenu(mobileMenu.hidden));
     // любой переход по пункту закрывает меню
@@ -119,7 +139,21 @@
       a.addEventListener("click", () => setMenu(false))
     );
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !mobileMenu.hidden) setMenu(false);
+      if (mobileMenu.hidden) return;
+      if (e.key === "Escape") { setMenu(false); return; }
+      // меню на весь экран: не выпускаем фокус на ссылки под ним
+      if (e.key !== "Tab") return;
+      const items = mobileMenu.querySelectorAll("a");
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
     // если экран стал широким, меню больше не нужно
     window.addEventListener("resize", () => {
@@ -305,8 +339,13 @@
       const t = document.querySelector(id);
       if (!t) return;
       e.preventDefault();
-      const top = t.getBoundingClientRect().top + window.scrollY - 70;
-      window.scrollTo({ top, behavior: "smooth" });
+      // отступ считаем по реальной высоте шапки: она разная до и после
+      // прокрутки, а на мобильном ещё и своя
+      const navEl = document.getElementById("nav");
+      const offset = (navEl ? navEl.offsetHeight : 70) + 12;
+      const top = t.getBoundingClientRect().top + window.scrollY - offset;
+      // при отключённом движении проезд всей страницы недопустим
+      window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
     });
   });
 })();
