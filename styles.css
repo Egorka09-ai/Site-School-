@@ -723,7 +723,7 @@ body.menu-open { overflow: hidden; }
 .camp { background: var(--blue-50); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .camp-inner {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: clamp(30px, 5vw, 70px);
   align-items: center;
 }
@@ -731,13 +731,36 @@ body.menu-open { overflow: hidden; }
 .camp-text .camp-accent { color: var(--gray-900); font-weight: 500; }
 .camp-text .btn { margin-top: 30px; }
 
-.camp-marks { display: flex; flex-wrap: wrap; gap: 10px; }
-.camp-marks span {
-  font-size: 14px; color: var(--blue-800);
+/* Плашки в две неровные строки висели в пустоте справа. Собрали их
+   в одну панель — она уравновешивает текстовый столбец по массе. */
+.camp-marks {
   background: var(--white);
   border: 1.5px solid var(--line);
-  border-radius: 100px;
-  padding: 10px 18px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.camp-marks-title {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--blue-800);
+  padding: 20px 24px 14px;
+}
+.camp-marks ul { list-style: none; }
+.camp-marks li {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 24px;
+  font-size: 15px; line-height: 1.5;
+  color: var(--gray-900);
+  border-top: 1px solid var(--line);
+}
+.camp-marks li::before {
+  content: "";
+  flex: none;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--blue-400);
 }
 
 /* ============================================================
@@ -965,6 +988,8 @@ body.menu-open { overflow: hidden; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
   .footer-brand { grid-column: 1 / -1; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
+  /* шесть карточек делятся на две колонки без остатка */
+  .feat-grid { grid-template-columns: repeat(2, 1fr); }
   .cta-inner { grid-template-columns: 1fr; }
 }
 @media (max-width: 860px) {
