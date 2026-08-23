@@ -454,37 +454,6 @@ body.menu-open { overflow: hidden; }
 }
 .audience-pills span:hover { border-color: var(--blue-400); color: var(--gray-900); }
 
-/* Статистика */
-.stats {
-  display: grid;
-  /* остался один показатель — растягиваем его на всю ширину и центрируем */
-  grid-template-columns: 1fr;
-  gap: 1px;
-  margin-top: clamp(60px, 8vw, 120px);
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.stat {
-  background: var(--blue-50);
-  padding: clamp(28px, 3vw, 44px) clamp(22px, 2.4vw, 36px);
-  transition: background 0.5s;
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center; gap: 6px;
-}
-.stat:hover { background: var(--blue-100); }
-.stat-num {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: clamp(40px, 5vw, 76px);
-  line-height: 1;
-  color: var(--blue-800);
-  letter-spacing: -0.02em;
-}
-.stat-num .suf { color: var(--blue-600); }
-.stat-label { margin-top: 12px; font-size: 13px; color: var(--gray-500); line-height: 1.45; font-weight: 500; }
-
 /* ============================================================
    ЯЗЫКИ
    ============================================================ */
@@ -729,7 +698,11 @@ body.menu-open { overflow: hidden; }
 }
 .camp-text p { font-size: 16px; line-height: 1.8; color: var(--gray-500); max-width: 54ch; margin-top: 18px; }
 .camp-text .camp-accent { color: var(--gray-900); font-weight: 500; }
-.camp-text .btn { margin-top: 30px; }
+/* Лагерь ведёт не в форму «запишитесь на занятия», а напрямую к людям:
+   про смены спрашивают конкретику, на которую форма не отвечает. */
+.camp-cta { margin-top: 32px; }
+.camp-cta-note { font-size: 15px; color: var(--gray-500); margin-bottom: 16px; }
+.camp-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* Плашки в две неровные строки висели в пустоте справа. Собрали их
    в одну панель — она уравновешивает текстовый столбец по массе. */
@@ -999,8 +972,6 @@ body.menu-open { overflow: hidden; }
   .lang-grid { grid-template-columns: 1fr; }
   .feat-grid { grid-template-columns: 1fr; }
   .camp-inner { grid-template-columns: 1fr; }
-  /* три показателя в две колонки дают висящий третий — лучше сразу в столбик */
-  .stats { grid-template-columns: 1fr; }
   .stairs { grid-template-columns: 1fr; min-height: unset; gap: 10px; }
   .step { min-height: unset !important; padding: 22px; }
   .step::before { display: none; }
@@ -1011,7 +982,6 @@ body.menu-open { overflow: hidden; }
   .hero-title .line { white-space: normal; }
   /* на узком экране одна строка адреса уже не помещается — пусть переносится */
   .foot-contacts .fc-addr { white-space: normal; }
-  .stats { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .hero-cta { width: 100%; }
   .hero-cta .btn { flex: 1; justify-content: center; }

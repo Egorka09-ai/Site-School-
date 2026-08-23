@@ -76,9 +76,6 @@
     document.body.classList.add("loaded", "no-anim");
     document.querySelectorAll(".reveal, .step").forEach((el) => el.classList.add("in"));
     document.querySelectorAll(".intro-statement .w").forEach((w) => (w.style.opacity = "1"));
-    document.querySelectorAll("[data-count]").forEach((el) => {
-      el.textContent = parseInt(el.getAttribute("data-count"), 10).toLocaleString("ru-RU");
-    });
   }
   let failsafeRan = false;
   function checkVisibility() {
@@ -164,31 +161,6 @@
     );
     so.observe(stairs);
   }
-
-  /* ---------- Счётчики статистики ---------- */
-  const counters = document.querySelectorAll("[data-count]");
-  const animateCount = (el) => {
-    const target = parseInt(el.getAttribute("data-count"), 10);
-    if (reduce) { el.textContent = target.toLocaleString("ru-RU"); return; }
-    const dur = 1500;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min((now - start) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased).toLocaleString("ru-RU");
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-  const co = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { animateCount(e.target); co.unobserve(e.target); }
-      });
-    },
-    { threshold: 0.6 }
-  );
-  counters.forEach((el) => co.observe(el));
 
   /* ---------- Hero: параллакс свечения за курсором ---------- */
   const glow = document.getElementById("heroGlow");
