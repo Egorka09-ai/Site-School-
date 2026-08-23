@@ -538,17 +538,26 @@ body.menu-open { overflow: hidden; }
   transition: height 1s var(--ease-out);
 }
 .step.in::before { height: 100%; }
-.step:nth-child(1) { min-height: 30%; }
-.step:nth-child(2) { min-height: 46%; }
-.step:nth-child(3) { min-height: 62%; }
-.step:nth-child(4) { min-height: 80%; }
+/* Нижние ступени были ниже собственного содержимого, поэтому A1 и A2
+   фактически сравнялись по высоте. Отсчёт начинается выше содержимого. */
+.step:nth-child(1) { min-height: 50%; }
+.step:nth-child(2) { min-height: 62%; }
+.step:nth-child(3) { min-height: 74%; }
+.step:nth-child(4) { min-height: 87%; }
 .step:nth-child(5) { min-height: 100%; }
 .step:hover { border-color: var(--blue-400); }
 .step > * { position: relative; z-index: 1; }
 .step-code { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5vw, 80px); line-height: 0.9; letter-spacing: -0.02em; color: var(--blue-800); }
 .step:nth-child(5) .step-code { color: var(--coral); }
 .step-name { font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-800); }
-.step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.45; max-width: 22ch; }
+/* Описания разной длины: у A2 текст переносится на 4 строки, у остальных
+   на 3. Содержимое прижато к низу, поэтому лишняя строка поднимала букву
+   выше соседних. Резервируем место под 4 строки — буквы встают в один ряд. */
+.step-desc {
+  font-size: 13px; color: var(--gray-500); line-height: 1.45;
+  max-width: 22ch;
+  min-height: 5.8em;   /* 4 строки × 1.45 */
+}
 .path-foot {
   display: flex;
   align-items: center;
