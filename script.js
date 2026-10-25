@@ -101,31 +101,41 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
+  /* ---------- Блокировка прокрутки ----------
+     overflow:hidden на body не держит прокрутку в iOS Safari, поэтому
+     фиксируем страницу и запоминаем позицию, чтобы вернуть её при закрытии.
+     Замок общий для меню и лайтбокса: если открыты оба, позицию возвращает
+     только последний закрывшийся — иначе страница прыгнет в начало. */
+  let savedScroll = 0;
+  let locks = 0;
+  const lockScroll = (lock, cls) => {
+    if (lock) {
+      if (locks === 0) {
+        savedScroll = window.scrollY;
+        document.body.style.top = -savedScroll + "px";
+      }
+      locks += 1;
+      document.body.classList.add(cls);
+    } else {
+      document.body.classList.remove(cls);
+      locks = Math.max(0, locks - 1);
+      if (locks === 0) {
+        document.body.style.top = "";
+        window.scrollTo(0, savedScroll);
+      }
+    }
+  };
+
   /* ---------- Мобильное меню ---------- */
   const burger = document.getElementById("burger");
   const mobileMenu = document.getElementById("mobileMenu");
   if (burger && mobileMenu) {
-    // overflow:hidden на body не держит прокрутку в iOS Safari, поэтому
-    // фиксируем страницу и запоминаем позицию, чтобы вернуть её при закрытии
-    let savedScroll = 0;
-    const lockScroll = (lock) => {
-      if (lock) {
-        savedScroll = window.scrollY;
-        document.body.style.top = -savedScroll + "px";
-        document.body.classList.add("menu-open");
-      } else {
-        document.body.classList.remove("menu-open");
-        document.body.style.top = "";
-        window.scrollTo(0, savedScroll);
-      }
-    };
-
     const setMenu = (open) => {
       mobileMenu.hidden = !open;
       burger.classList.toggle("open", open);
       burger.setAttribute("aria-expanded", open ? "true" : "false");
       burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
-      lockScroll(open);
+      lockScroll(open, "menu-open");
       if (open) {
         const first = mobileMenu.querySelector("a");
         if (first) first.focus();
@@ -348,4 +358,92 @@
       window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
     });
   });
+
+  /* ---------- Лайтбокс галереи ---------- */
+  const lb = document.getElementById("lightbox");
+  const shots = Array.prototype.slice.call(document.querySelectorAll(".shot"));
+  if (lb && shots.length) {
+    const lbImg = document.getElementById("lbImg");
+    const lbCaption = document.getElementById("lbCaption");
+    const lbCounter = document.getElementById("lbCounter");
+    const lbPrev = document.getElementById("lbPrev");
+    const lbNext = document.getElementById("lbNext");
+    const lbClose = document.getElementById("lbClose");
+    let current = -1;
+    let opener = null;
+
+    // соседние кадры подгружаем заранее: перелистывание без белой паузы
+    const warm = (i) => {
+      const btn = shots[(i + shots.length) % shots.length];
+      if (!btn) return;
+      const im = new Image();
+      im.src = btn.href;
+    };
+
+    const show = (i) => {
+      current = (i + shots.length) % shots.length;
+      const btn = shots[current];
+      const thumb = btn.querySelector("img");
+      const text = thumb ? thumb.alt : "";
+      // размеры ставим заранее, чтобы кадр не прыгал при подмене src
+      if (btn.dataset.w) lbImg.width = btn.dataset.w;
+      if (btn.dataset.h) lbImg.height = btn.dataset.h;
+      lbImg.src = btn.href;
+      lbImg.alt = text;
+      lbCaption.textContent = text;
+      lbCounter.textContent = current + 1 + " из " + shots.length;
+      warm(current + 1);
+      warm(current - 1);
+    };
+
+    const open = (i) => {
+      opener = shots[i];
+      show(i);
+      lb.hidden = false;
+      lockScroll(true, "lb-open");
+      lbClose.focus();
+    };
+
+    const close = () => {
+      lb.hidden = true;
+      lockScroll(false, "lb-open");
+      // освобождаем память: большой кадр больше не нужен
+      lbImg.removeAttribute("src");
+      if (opener) opener.focus();
+      opener = null;
+      current = -1;
+    };
+
+    // без JS ссылка просто откроет снимок — поэтому перехватываем клик здесь
+    shots.forEach((btn, i) =>
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        open(i);
+      })
+    );
+    lbPrev.addEventListener("click", () => show(current - 1));
+    lbNext.addEventListener("click", () => show(current + 1));
+    lb.querySelectorAll("[data-close]").forEach((el) =>
+      el.addEventListener("click", close)
+    );
+
+    document.addEventListener("keydown", (e) => {
+      if (lb.hidden) return;
+      if (e.key === "Escape") { close(); return; }
+      if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); return; }
+      if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); return; }
+      // не выпускаем фокус из окна просмотра на ссылки под ним
+      if (e.key !== "Tab") return;
+      const items = [lbPrev, lbNext, lbClose];
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
 })();
