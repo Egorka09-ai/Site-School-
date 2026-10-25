@@ -359,6 +359,58 @@
     });
   });
 
+  /* ---------- Отзывы: разворот длинного текста и смена языка ---------- */
+  const reviewCards = document.querySelectorAll(".review-card");
+  if (reviewCards.length) {
+    const cards = [];
+
+    reviewCards.forEach((card) => {
+      const texts = Array.prototype.slice.call(card.querySelectorAll(".review-text"));
+      const moreBtn = card.querySelector(".review-more");
+      const langBtn = card.querySelector(".review-lang");
+      const visible = () => texts.filter((t) => !t.hidden)[0];
+
+      // кнопка «читать полностью» нужна, только если текст реально обрезан
+      const syncMore = () => {
+        if (!moreBtn || card.classList.contains("open")) return;
+        const t = visible();
+        moreBtn.hidden = !t || t.scrollHeight <= t.clientHeight + 1;
+      };
+
+      if (moreBtn) {
+        moreBtn.addEventListener("click", () => {
+          const open = card.classList.toggle("open");
+          moreBtn.textContent = open ? "Свернуть" : "Читать полностью";
+        });
+      }
+
+      if (langBtn) {
+        langBtn.addEventListener("click", () => {
+          texts.forEach((t) => { t.hidden = !t.hidden; });
+          const t = visible();
+          const alt = !!t && t.classList.contains("review-alt");
+          langBtn.textContent = alt ? langBtn.dataset.ru : langBtn.dataset.alt;
+          // у перевода своя длина — пересчитываем обрезку с нуля
+          card.classList.remove("open");
+          if (moreBtn) moreBtn.textContent = "Читать полностью";
+          syncMore();
+        });
+      }
+
+      cards.push(syncMore);
+      syncMore();
+    });
+
+    const resync = () => cards.forEach((fn) => fn());
+    // шрифт подгружается позже разметки и меняет высоту строк
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resync);
+    let t = 0;
+    window.addEventListener("resize", () => {
+      clearTimeout(t);
+      t = setTimeout(resync, 180);
+    });
+  }
+
   /* ---------- Лайтбокс галереи ---------- */
   const lb = document.getElementById("lightbox");
   const shots = Array.prototype.slice.call(document.querySelectorAll(".shot"));

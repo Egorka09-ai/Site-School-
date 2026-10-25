@@ -711,12 +711,6 @@ body.menu-open {
 }
 .tour-title em { font-style: italic; color: var(--blue-600); }
 .tour-text p { font-size: 15px; line-height: 1.75; color: var(--gray-500); max-width: 52ch; }
-.tour-note {
-  margin-top: 14px;
-  font-size: 13px;
-  color: var(--gray-700);
-  font-variant-numeric: tabular-nums;
-}
 
 @media (max-width: 760px) {
   .tour { grid-template-columns: 1fr; justify-items: center; text-align: center; }
@@ -877,28 +871,32 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
   .shot:hover img,
   .shot:focus-visible img { transform: none; }
 }
+
 /* ============================================================
    ОТЗЫВЫ
    ============================================================ */
 .reviews { background: var(--blue-50); border-top: 1px solid var(--line); }
 .reviews-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2vw, 24px);
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;           /* карточки разной длины не растягиваются */
+  gap: clamp(16px, 2vw, 26px);
 }
 .review-card {
   background: var(--white);
   border: 1.5px solid var(--line);
   border-radius: var(--radius);
-  padding: clamp(22px, 2.4vw, 32px);
-  display: flex; flex-direction: column; gap: 14px;
-  transition: transform 0.4s var(--ease-out), border-color 0.4s, box-shadow 0.4s;
+  padding: clamp(22px, 2.4vw, 34px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: border-color 0.4s, box-shadow 0.4s;
 }
 .review-card:hover {
-  transform: translateY(-5px);
   border-color: var(--blue-400);
   box-shadow: 0 12px 36px rgba(23, 79, 144, 0.10);
 }
+.review-head { display: flex; align-items: center; gap: 14px; }
 .review-avatar {
   width: 44px; height: 44px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -909,13 +907,63 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
 }
 .review-name {
   font-family: var(--display); font-weight: 600;
-  font-size: clamp(17px, 1.4vw, 22px); color: var(--gray-900);
+  font-size: clamp(18px, 1.4vw, 22px); color: var(--gray-900);
 }
-.review-text { font-size: 14px; line-height: 1.75; color: var(--gray-500); flex: 1; }
+.review-text {
+  font-size: 15px;
+  line-height: 1.78;
+  color: var(--gray-500);
+  margin: 0;
+  /* длинные отзывы сворачиваем до семи строк, полный текст — по кнопке */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  line-clamp: 7;
+  overflow: hidden;
+}
+.review-card.open .review-text {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+.review-alt { font-style: italic; }
 
-@media (max-width: 1080px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .reviews-grid { grid-template-columns: 1fr; } }
+.review-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+.review-more,
+.review-lang {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out),
+              border-color 0.25s var(--ease-out), transform 0.15s var(--ease-out);
+}
+.review-more {
+  border: 1.5px solid var(--blue-400);
+  background: transparent;
+  color: var(--blue-600);
+}
+.review-more:hover { background: var(--blue-600); border-color: var(--blue-600); color: var(--white); }
+.review-lang {
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--gray-700);
+}
+.review-lang:hover { border-color: var(--blue-400); color: var(--blue-600); }
+.review-more:active, .review-lang:active { transform: scale(0.96); }
 
+@media (max-width: 760px) {
+  .reviews-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-card, .review-more, .review-lang { transition: none; }
+  .review-more:active, .review-lang:active { transform: none; }
+}
 /* ============================================================
    CTA / КОНТАКТ   (тёмный блок для контраста)
    ============================================================ */

@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" />
-<link rel="stylesheet" href="styles.css?v=20261025a" />
+<link rel="stylesheet" href="styles.css?v=20261025b" />
 
 <script type="application/ld+json">
 {
@@ -59,6 +59,15 @@
     .reveal, .step { opacity: 1 !important; transform: none !important; }
     .hero-eyebrow, .hero-lead, .hero-cta { opacity: 1 !important; transform: none !important; }
     .hero-title .line > span { transform: none !important; }
+    /* отзывы свёрнуты до семи строк, а разворачивает их скрипт —
+       без него показываем целиком и убираем неработающие кнопки */
+    .review-text {
+      display: block !important;
+      -webkit-line-clamp: unset !important;
+      line-clamp: unset !important;
+      overflow: visible !important;
+    }
+    .review-actions { display: none !important; }
   </style>
 </noscript>
 </head>
@@ -199,7 +208,6 @@
         <span class="eyebrow">Видеоэкскурсия</span>
         <h3 class="tour-title">Пройдитесь по школе <em>за полминуты</em></h3>
         <p>Короткая прогулка по этажам: холл с колоннами, лестница, классы и уголки, где ученики ждут занятие. Со звуком — но его можно выключить.</p>
-        <p class="tour-note">23 секунды · 5 МБ · загрузится только по нажатию</p>
       </div>
     </div>
 
@@ -217,11 +225,6 @@
       <li class="shot-item reveal">
         <a class="shot" href="img/school-hall-chess.jpg" data-w="1050" data-h="1400" aria-label="Открыть фото: Парадный холл: лестница на второй этаж и высокое окно">
           <img src="img/thumb/school-hall-chess.jpg" alt="Парадный холл: лестница на второй этаж и высокое окно" width="570" height="760" loading="lazy" decoding="async" />
-        </a>
-      </li>
-      <li class="shot-item reveal">
-        <a class="shot" href="img/school-lobby-2.jpg" data-w="900" data-h="1200" aria-label="Открыть фото: Вестибюль школы с лестницей и детскими рисунками на стене">
-          <img src="img/thumb/school-lobby-2.jpg" alt="Вестибюль школы с лестницей и детскими рисунками на стене" width="570" height="760" loading="lazy" decoding="async" />
         </a>
       </li>
       <li class="shot-item reveal">
@@ -255,11 +258,6 @@
         </a>
       </li>
       <li class="shot-item reveal">
-        <a class="shot" href="img/school-class-1.jpg" data-w="900" data-h="1200" aria-label="Открыть фото: Учебный класс с партами и наглядными материалами">
-          <img src="img/thumb/school-class-1.jpg" alt="Учебный класс с партами и наглядными материалами" width="570" height="760" loading="lazy" decoding="async" />
-        </a>
-      </li>
-      <li class="shot-item reveal">
         <a class="shot" href="img/school-class-blinds.jpg" data-w="1050" data-h="1400" aria-label="Открыть фото: Светлый класс с партами и работами учеников на стенах">
           <img src="img/thumb/school-class-blinds.jpg" alt="Светлый класс с партами и работами учеников на стенах" width="570" height="760" loading="lazy" decoding="async" />
         </a>
@@ -267,11 +265,6 @@
       <li class="shot-item reveal">
         <a class="shot" href="img/school-class-board.jpg" data-w="1050" data-h="1400" aria-label="Открыть фото: Класс с маркерной доской и картой мира">
           <img src="img/thumb/school-class-board.jpg" alt="Класс с маркерной доской и картой мира" width="570" height="760" loading="lazy" decoding="async" />
-        </a>
-      </li>
-      <li class="shot-item reveal wide">
-        <a class="shot" href="img/school-class-2.jpg" data-w="1200" data-h="900" aria-label="Открыть фото: Просторный класс с телевизором и доской">
-          <img src="img/thumb/school-class-2.jpg" alt="Просторный класс с телевизором и доской" width="760" height="570" loading="lazy" decoding="async" />
         </a>
       </li>
       <li class="shot-item reveal">
@@ -495,48 +488,94 @@
     <div class="section-head reveal">
       <span class="eyebrow">Говорят ученики</span>
       <h2 class="section-title">Результат — в их <em>словах</em></h2>
-      <p class="section-sub">Наши ученики — от школьников до людей старшего поколения. Они учатся годами и возвращаются снова. Вот что они говорят.</p>
+      <p class="section-sub">Отзывы публикуем так, как их написали сами ученики. Трое прислали ещё и версию на языке, который учат, — её можно открыть кнопкой под отзывом.</p>
     </div>
-    <div class="reviews-grid">
-      <article class="review-card reveal">
-        <div class="review-avatar" style="--av-hue: 210">П</div>
-        <div class="review-name">Платон</div>
-        <p class="review-text">Более 5 лет занимался в школе «Результат». Начав с нуля, достиг уровня, который позволил поступить на кафедру лингвистики. Педагоги — мастера своего дела: уроки проходят динамично, знания сразу применяются в жизни.</p>
+    <div class="reviews-grid reveal">
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 210" aria-hidden="true">П</div>
+          <div class="review-name">Платон</div>
+        </div>
+        <p class="review-text">Более 5 лет я был учеником школы "Результат". Начиная учить язык с самого нуля, я смог добиться определенных успехов, благодаря работе учителей, их стараниям. Сейчас я учусь в университете, на кафедре лингвистики и могу с уверенностью заявить, что для людей, желающих выучить иностранный язык, школа Результат лучший выбор как в нашем городе, так и за его пределами. Педагоги здесь - мастера своего дела: они не только отлично владеют методиками преподавания, но и по-настоящему болеют за успехи учеников. Уроки проходят динамично, без рутины - каждый раз узнаёшь что-то новое и интересное. Главное - школа действительно делает упор на реальный результат. Это подтверждает опыт нашей группы, в которой все ребята показали отличные результаты на экзаменах. Особенно ценно то, что знания, которые здесь дают, не остаются «на бумаге» — их можно сразу применять в жизни. По моему мнению, все вышеперечисленное показывает уровень школы и качество образования, которое она дает!</p>
+        <p class="review-text review-alt" lang="en" hidden>I have been a student of The Result for 5 years and I can say that this school seems to be the best in our region. Teachers are really professional here. They want to teach people and they can do it. Moreover, they always can help their students. The atmosphere is friendly. You can not only study but also make friends here. The process of education is not boring at all! This school is aimed at the results. Every single person in my group has got a really high score in their exams. And the last but not least, everybody gets real and useful knowledge here. To conclude, if you want to learn a foreign language, you should become a part of The Result!</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        <button type="button" class="review-lang" data-alt="In English" data-ru="По-русски">In English</button>
+        </div>
       </article>
-      <article class="review-card reveal reveal-d1">
-        <div class="review-avatar" style="--av-hue: 160">Л</div>
-        <div class="review-name">Любовь</div>
-        <p class="review-text">Пришла улучшить оценки, а через несколько лет обрела настоящую любовь к языку. Профессиональные педагоги и дружеская атмосфера. Отдельная благодарность Ксении Александровне за индивидуальный подход!</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 160" aria-hidden="true">Л</div>
+          <div class="review-name">Любовь</div>
+        </div>
+        <p class="review-text">Пришла в «Результат», чтобы улучшить оценки в школе, а через несколько лет обрела любовь к языку и отлично сдала экзамены. Профессиональные педагоги и дружеская атмосфера настраивают на интересный и результативный учебный процесс. Отдельная благодарность Ханиной Ксении Александровне за любовь к своему делу и индивидуальный подход к каждому ученику! Рекомендую всем, кто любит языки и хочет углубиться в их изучение.</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        </div>
       </article>
-      <article class="review-card reveal reveal-d2">
-        <div class="review-avatar" style="--av-hue: 280">А</div>
-        <div class="review-name">Анастасия</div>
-        <p class="review-text">Ксения Александровна привила мне любовь к языкам и вдохновила на профессиональный путь. Сейчас я сама преподаю английский — и опираюсь на те принципы, которые заложила она.</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 280" aria-hidden="true">А</div>
+          <div class="review-name">Анастасия</div>
+        </div>
+        <p class="review-text">Хотелось бы оставить положительный отзыв о языковой школе «Результат». На протяжении нескольких лет я занималась английским и немецким языками с Ксенией Александровной. Это преподавательница, которая привила мне любовь к языкам и показала, что их изучение может быть очень увлекательным. Ксения Александровна во многом вдохновила меня и, в частности, повлияла на выбор моего профессионального пути. Сейчас я сама являюсь преподавателем английского языка и во многом опираюсь на те принципы обучения, которые мне привила Ксения Александровна. В «Результате» было очень много разговорной практики, ясного разбора грамматики и введения новой лексики. Я благодарна школе и преподавателю за знания и опыт, которые регулярно применяю на практике!</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        </div>
       </article>
-      <article class="review-card reveal reveal-d3">
-        <div class="review-avatar" style="--av-hue: 30">В</div>
-        <div class="review-name">Виктория</div>
-        <p class="review-text">Занятия проходят интересно, понятно и в комфортной атмосфере. Преподаватели всегда готовы объяснить сложную тему ещё раз. Особенно нравится внимание к разговорной речи — это очень помогает.</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 30" aria-hidden="true">В</div>
+          <div class="review-name">Виктория</div>
+        </div>
+        <p class="review-text">Хочу поделиться своим впечатлением о школе иностранных языков «Результат». Мне очень понравилось обучение: занятия проходят интересно, понятно и в комфортной атмосфере. Преподаватели внимательные, доброжелательные и всегда готовы объяснить сложные темы ещё раз. Особенно понравилось, что на занятиях уделяется внимание не только грамматике, но и разговорной речи, что помогает чувствовать себя увереннее при общении на иностранном языке. Спасибо школе и преподавателям за профессионализм, поддержку и приятную атмосферу! Обязательно буду рекомендовать эту школу своим друзьям и знакомым.</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        </div>
       </article>
-      <article class="review-card reveal">
-        <div class="review-avatar" style="--av-hue: 195">И</div>
-        <div class="review-name">Иван</div>
-        <p class="review-text">Посещаю Result уже 7 лет — с третьего класса. Начал с немецкого, влюбился в язык и изучаю до сих пор. Недавно добавил английский. Самое главное — на каждое занятие иду с удовольствием.</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 195" aria-hidden="true">И</div>
+          <div class="review-name">Иван</div>
+        </div>
+        <p class="review-text">Я посещаю Результат уже 7 лет, с третьего класса. Сначала начал заниматься там немецким языком, просто чтобы повысить успеваемость в школе. Но уже скоро я полюбил язык и изучаю до сих пор. Недавно добавил английский и очень доволен. Самое главное, что на каждое занятие я иду с удовольствием.</p>
+        <p class="review-text review-alt" lang="de" hidden>Ich besuche Result schon seit 7 Jahren, seit der dritten Klasse. Zuerst habe ich angefangen, dort Deutsch zu lernen, nur um die Noten in der Schule höher zu machen. Aber schon bald habe ich mich in die Sprache verliebt und praktiziere sie noch. Kürzlich habe ich angefangen, auch Englisch zu üben, und bin sehr zufrieden. Das Wichtigste ist, dass ich zu jeder Stunde gerne gehe.</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        <button type="button" class="review-lang" data-alt="Auf Deutsch" data-ru="По-русски">Auf Deutsch</button>
+        </div>
       </article>
-      <article class="review-card reveal reveal-d1">
-        <div class="review-avatar" style="--av-hue: 340">А</div>
-        <div class="review-name">Ангелина</div>
-        <p class="review-text">Занималась 5 лет и осталась очень довольна! Ксения Александровна отлично подготовила к ОГЭ и ЕГЭ — сдала экзамены уверенно. Очень рекомендую эту школу!</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 340" aria-hidden="true">А</div>
+          <div class="review-name">Ангелина</div>
+        </div>
+        <p class="review-text">Занималась в этой школе 5 лет и осталась очень довольна! Отдельное спасибо Ксении Александровне за интересные занятия, поддержку и качественную подготовку к ОГЭ и ЕГЭ. Занятия помогли мне хорошо подготовиться и уверенно сдать экзамены. Очень рекомендую эту школу!</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        </div>
       </article>
-      <article class="review-card reveal reveal-d2">
-        <div class="review-avatar" style="--av-hue: 50">В</div>
-        <div class="review-name">Валерий</div>
-        <p class="review-text">Ксения Александровна — преподаватель высочайшего класса. Помогла структурировать грамматику, поставила произношение, погрузила в тонкости делового и разговорного языка. Наставница с большой буквы.</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 50" aria-hidden="true">В</div>
+          <div class="review-name">Валерий</div>
+        </div>
+        <p class="review-text">Ксения Александровна - преподаватель высочайшего класса, который умеет привить любовь не только к результату, но и к самому процессу обучения. Несколько лет назад я пришел на занятия с полной уверенностью в своем багаже знаний, однако быстро осознал, как много мне еще необходимо освоить. Благодаря индивидуально подобранным, наглядным примерам Ксения Александровна помогла мне структурировать грамматику, поставила правильное произношение, погрузила в тонкости межкультурной коммуникации и наглядно показала разницу между деловым и разговорным языком. Ксения Александровна - Наставница с большой буквы. Основу ее работы составляют искренняя чуткость, внимание к каждому студенту и стремление добиться глубокого понимания материала. Мне невероятно повезло обучаться именно у нее.</p>
+        <p class="review-text review-alt" lang="en" hidden>Ksenia Alexandrovna is an exceptional teacher who knows exactly how to inspire a love not just for the final result, but for the learning process itself. When I started her classes a few years ago, I was completely confident in my knowledge of the language, only to quickly realize just how much I still had to master. Using highly personalized and practical examples, Ksenia Alexandrovna helped me structure my grammar, refine my pronunciation, and dive into the nuances of cross-cultural communication, all while clearly demonstrating the difference between formal and informal English. Ksenia Alexandrovna is a Mentor in every sense of the word. Her approach is rooted in genuine empathy, individual attention to every student, and a strong commitment to ensuring a profound understanding of the material. I feel incredibly fortunate to have learnt from her.</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        <button type="button" class="review-lang" data-alt="In English" data-ru="По-русски">In English</button>
+        </div>
       </article>
-      <article class="review-card reveal reveal-d3">
-        <div class="review-avatar" style="--av-hue: 120">А</div>
-        <div class="review-name">Анна</div>
-        <p class="review-text">Мне 51, учу немецкий с нуля — это непросто. Ксения Александровна очень терпеливо объясняет столько, сколько нужно. Ценю её профессионализм, индивидуальный подход и потрясающее чувство юмора!</p>
+      <article class="review-card">
+        <div class="review-head">
+          <div class="review-avatar" style="--av-hue: 120" aria-hidden="true">А</div>
+          <div class="review-name">Анна</div>
+        </div>
+        <p class="review-text">Хочу поблагодарить Ханину Ксению Александровну за обучение немецкому языку! Мне 51, учу немецкий с «нуля» и это даётся мне непросто: я часто ошибаюсь, что-то забываю и не всегда сразу понимаю новый материал. Но Ксения Александровна очень терпеливо и внимательно относится к моим ошибкам, спокойно всё объясняет столько, сколько нужно. Она умеет разложить сложную тему на понятные кусочки и подать так, что даже самые трудные правила перестают казаться непреодолимыми. Особенно ценю её профессионализм, индивидуальный подход и потрясающее чувство юмора: оно здорово помогает преодолевать трудности в изучении языка. Отдельно хочется отметить саму школу: очень красивое, уютное и атмосферное место, куда приятно приходить на занятия. Спасибо, Ксения Александровна, за Ваше терпение, внимательность и поддержку! Благодаря Вам хочется продолжать учить немецкий и двигаться дальше, даже когда бывает сложно.</p>
+        <div class="review-actions">
+        <button type="button" class="review-more" hidden>Читать полностью</button>
+        </div>
       </article>
     </div>
   </div>
@@ -763,6 +802,6 @@
   </div>
 </div>
 
-<script src="script.js?v=20261025a"></script>
+<script src="script.js?v=20261025b"></script>
 </body>
 </html>
