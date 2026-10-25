@@ -718,17 +718,53 @@ body.menu-open {
   .tour-text p { margin-inline: auto; }
 }
 
-/* ---------- сетка снимков ---------- */
+/* ---------- альбомы ---------- */
+.album { margin-top: clamp(34px, 4vw, 60px); }
+.album-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 14px;
+  align-items: baseline;
+  margin-bottom: clamp(14px, 1.6vw, 22px);
+}
+.album-num {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--blue-400);
+  letter-spacing: 0.06em;
+}
+.album-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(21px, 2vw, 30px);
+  line-height: 1.2;
+  color: var(--gray-900);
+  margin: 0;
+}
+.album-sub {
+  grid-column: 2;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--gray-500);
+  max-width: 62ch;
+}
+
+/* ---------- сетка снимков ----------
+   Четыре колонки, первый кадр группы занимает 2x2 клетки, остальные
+   четыре — по одной. Ровно два ряда без пустот, и в группе появляется
+   главный снимок вместо череды одинаковых плиток. */
 .shots {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: clamp(8px, 1vw, 14px);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 0.9vw, 14px);
 }
 .shot-item { aspect-ratio: 3 / 4; }
-.shot-item.wide { grid-column: span 2; aspect-ratio: 3 / 2; }
+.shot-item.feature { grid-column: span 2; grid-row: span 2; }
 
 .shot {
   display: block;
@@ -766,16 +802,18 @@ body.menu-open {
 .shot:hover::after { background: rgba(23, 79, 144, 0.10); }
 
 .shots-hint {
-  margin-top: 18px;
+  margin-top: clamp(20px, 2.4vw, 30px);
   text-align: center;
   font-size: 13px;
   color: var(--gray-500);
 }
 
-/* на самых узких экранах широкий кадр занимает всю строку */
-@media (max-width: 420px) {
+/* планшет и телефон: две колонки, крупный кадр — широкой лентой сверху */
+@media (max-width: 860px) {
   .shots { grid-template-columns: repeat(2, 1fr); }
-  .shot-item.wide { grid-column: span 2; aspect-ratio: 4 / 3; }
+  /* квадрат: 4/3 слишком обрезает вертикальные кадры, 3/4 делает их
+     непомерно высокими на телефоне */
+  .shot-item.feature { grid-column: span 2; grid-row: span 1; aspect-ratio: 1 / 1; }
 }
 
 /* ---------- лайтбокс ---------- */
@@ -859,7 +897,9 @@ body.menu-open {
   .lb-next { right: auto; left: 50%; top: auto; bottom: -4px; transform: translateX(calc(-50% + 34px)); }
   .lb-prev:active { transform: translateX(calc(-50% - 34px)) scale(0.94); }
   .lb-next:active { transform: translateX(calc(-50% + 34px)) scale(0.94); }
-  .lb-panel { padding-bottom: 60px; }
+  /* крестику нужно место над кадром, иначе он ложится поверх снимка */
+  .lb-panel { padding-top: 52px; padding-bottom: 60px; }
+  .lb-close { top: 0; right: 0; }
 }
 
 body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
@@ -877,93 +917,196 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
    ============================================================ */
 .reviews { background: var(--blue-50); border-top: 1px solid var(--line); }
 .reviews-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: start;           /* карточки разной длины не растягиваются */
-  gap: clamp(16px, 2vw, 26px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.6vw, 24px);
 }
+.review-item { display: flex; }
 .review-card {
+  position: relative;
+  width: 100%;
   background: var(--white);
   border: 1.5px solid var(--line);
   border-radius: var(--radius);
-  padding: clamp(22px, 2.4vw, 34px);
+  padding: clamp(22px, 2.2vw, 30px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  transition: border-color 0.4s, box-shadow 0.4s;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s var(--ease-out);
 }
-.review-card:hover {
+.review-card:hover,
+.review-card:focus-within {
   border-color: var(--blue-400);
-  box-shadow: 0 12px 36px rgba(23, 79, 144, 0.10);
+  box-shadow: 0 14px 40px rgba(23, 79, 144, 0.10);
+  transform: translateY(-4px);
 }
-.review-head { display: flex; align-items: center; gap: 14px; }
+.review-mark {
+  font-family: var(--display);
+  font-size: 56px;
+  line-height: 0.75;
+  height: 24px;
+  color: var(--blue-400);
+  opacity: 0.45;
+}
+.review-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--gray-500);
+  /* карточки держим одного размера: полный текст открывается в окне.
+     flex:1 здесь нельзя — он растянул бы блок выше шести строк,
+     и последняя строка обрезалась бы посередине букв */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+}
+/* display:-webkit-box перебивает атрибут hidden — гасим явно,
+   иначе версия на английском видна прямо в карточке */
+.review-text[hidden] { display: none; }
+.review-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
 .review-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-weight: 700; font-size: 20px;
+  font-family: var(--display); font-weight: 700; font-size: 18px;
   color: var(--white);
   background: hsl(var(--av-hue, 210), 55%, 52%);
   flex: none;
 }
 .review-name {
-  font-family: var(--display); font-weight: 600;
-  font-size: clamp(18px, 1.4vw, 22px); color: var(--gray-900);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--gray-900);
 }
-.review-text {
-  font-size: 15px;
-  line-height: 1.78;
-  color: var(--gray-500);
-  margin: 0;
-  /* длинные отзывы сворачиваем до семи строк, полный текст — по кнопке */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 7;
-  line-clamp: 7;
-  overflow: hidden;
-}
-.review-card.open .review-text {
-  display: block;
-  -webkit-line-clamp: unset;
-  line-clamp: unset;
-  overflow: visible;
-}
-.review-alt { font-style: italic; }
-
-.review-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
-.review-more,
-.review-lang {
+.review-open {
+  margin-left: auto;
   font: inherit;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  padding: 8px 16px;
+  border: 0;
+  background: none;
+  color: var(--blue-600);
+  cursor: pointer;
+  padding: 6px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.review-open:hover { color: var(--blue-800); }
+
+@media (max-width: 1080px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px)  { .reviews-grid { grid-template-columns: 1fr; } }
+
+/* ---------- окно отзыва ---------- */
+.rv[hidden] { display: none; }
+.rv {
+  position: fixed;
+  inset: 0;
+  z-index: 210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 40px);
+  padding-top: calc(clamp(12px, 3vw, 40px) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(clamp(12px, 3vw, 40px) + env(safe-area-inset-bottom, 0px));
+}
+.rv-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 34, 63, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.rv-panel {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: clamp(24px, 3vw, 40px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+.rv-head { display: flex; align-items: center; gap: 14px; padding-right: 40px; }
+.rv-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 700; font-size: 21px;
+  color: var(--white);
+  background: hsl(var(--av-hue, 210), 55%, 52%);
+  flex: none;
+}
+.rv-name {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(20px, 2vw, 26px);
+  color: var(--gray-900);
+}
+.rv-body {
+  overflow-y: auto;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--gray-700);
+  -webkit-overflow-scrolling: touch;
+}
+.rv-body p { margin: 0 0 14px; }
+.rv-body p:last-child { margin-bottom: 0; }
+.rv-body .review-alt { font-style: italic; }
+.rv-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.rv-lang, .rv-done {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 18px;
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out),
               border-color 0.25s var(--ease-out), transform 0.15s var(--ease-out);
 }
-.review-more {
-  border: 1.5px solid var(--blue-400);
-  background: transparent;
-  color: var(--blue-600);
-}
-.review-more:hover { background: var(--blue-600); border-color: var(--blue-600); color: var(--white); }
-.review-lang {
-  border: 1.5px solid var(--line);
-  background: transparent;
+.rv-lang { border: 1.5px solid var(--line); background: transparent; color: var(--gray-700); }
+.rv-lang:hover { border-color: var(--blue-400); color: var(--blue-600); }
+.rv-done { border: 1.5px solid var(--blue-600); background: var(--blue-600); color: var(--white); margin-left: auto; }
+.rv-done:hover { background: var(--blue-800); border-color: var(--blue-800); }
+.rv-lang:active, .rv-done:active { transform: scale(0.96); }
+.rv-x {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
   color: var(--gray-700);
+  cursor: pointer;
+  transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out);
 }
-.review-lang:hover { border-color: var(--blue-400); color: var(--blue-600); }
-.review-more:active, .review-lang:active { transform: scale(0.96); }
+.rv-x svg { width: 20px; height: 20px; }
+.rv-x:hover { background: var(--blue-50); color: var(--blue-600); }
 
-@media (max-width: 760px) {
-  .reviews-grid { grid-template-columns: 1fr; }
-}
+body.rv-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
-  .review-card, .review-more, .review-lang { transition: none; }
-  .review-more:active, .review-lang:active { transform: none; }
+  .review-card, .review-open, .rv-lang, .rv-done, .rv-x { transition: none; }
+  .review-card:hover, .review-card:focus-within { transform: none; }
+  .rv-lang:active, .rv-done:active { transform: none; }
 }
+
 /* ============================================================
    CTA / КОНТАКТ   (тёмный блок для контраста)
    ============================================================ */
@@ -1121,7 +1264,13 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
    ============================================================ */
 .footer { border-top: 1px solid var(--line); padding: clamp(60px, 7vw, 100px) 0 40px; background: var(--blue-50); }
 /* колонка контактов шире остальных — иначе адрес и график ломаются на две строки */
-.footer-top { display: grid; grid-template-columns: 1.3fr 0.9fr 0.9fr 1.5fr; gap: 40px; }
+.footer-top {
+  display: grid;
+  /* minmax(0,…): иначе длинная почта не даёт колонке сжаться и сетка
+     вылезает за экран на узких телефонах */
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 1.5fr);
+  gap: 40px;
+}
 .footer-brand .brand { font-size: 38px; }
 .footer-brand p { font-family: var(--sans); color: var(--gray-500); font-size: 14px; line-height: 1.6; max-width: 32ch; margin-top: 20px; }
 /* заголовки колонок были моношрифтом в самом светлом сером — терялись.
@@ -1146,6 +1295,7 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
   transition: color 0.3s;
 }
 .foot-col a:hover { color: var(--blue-800); }
+.foot-col a, .foot-col p, .footer-brand p { overflow-wrap: anywhere; }
 .foot-contacts .fc-phone { font-weight: 600; color: var(--gray-900); }
 .foot-contacts .fc-addr { white-space: nowrap; }
 
@@ -1293,7 +1443,7 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
    АДАПТИВ
    ============================================================ */
 @media (max-width: 1080px) {
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
   .footer-brand { grid-column: 1 / -1; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   /* шесть карточек делятся на две колонки без остатка */
@@ -1313,6 +1463,7 @@ body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden
   .hero-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
 }
 @media (max-width: 560px) {
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
   /* nowrap обрезал заголовок: на 320px строка шире доступной ширины */
   .hero-title .line { white-space: normal; }
   /* на узком экране одна строка адреса уже не помещается — пусть переносится */

@@ -359,55 +359,105 @@
     });
   });
 
-  /* ---------- Отзывы: разворот длинного текста и смена языка ---------- */
-  const reviewCards = document.querySelectorAll(".review-card");
-  if (reviewCards.length) {
-    const cards = [];
+  /* ---------- Отзывы: полный текст в отдельном окне ----------
+     Карточки в сетке одного размера и не меняют высоту при открытии:
+     длинный отзыв показываем в окне, туда же уходит версия на языке,
+     который ученик учит. */
+  const rv = document.getElementById("rvModal");
+  const reviewCards = Array.prototype.slice.call(document.querySelectorAll(".review-card"));
+  if (rv && reviewCards.length) {
+    const rvName = document.getElementById("rvName");
+    const rvAvatar = document.getElementById("rvAvatar");
+    const rvBody = document.getElementById("rvBody");
+    const rvLang = document.getElementById("rvLang");
+    const rvClose = document.getElementById("rvClose");
+    let opener = null;
+    let mainP = null;
+    let altP = null;
+
+    const open = (card) => {
+      opener = card.querySelector(".review-open") || card;
+      const name = card.dataset.name || "";
+      rvName.textContent = name;
+      rvAvatar.textContent = name.charAt(0);
+      rvAvatar.style.setProperty("--av-hue", card.dataset.hue || "210");
+
+      rvBody.textContent = "";
+      mainP = document.createElement("p");
+      mainP.textContent = card.querySelector(".review-text").textContent;
+      rvBody.appendChild(mainP);
+
+      const alt = card.querySelector(".review-alt");
+      altP = null;
+      if (alt) {
+        altP = document.createElement("p");
+        altP.className = "review-alt";
+        altP.lang = alt.lang;
+        altP.textContent = alt.textContent;
+        altP.hidden = true;
+        rvBody.appendChild(altP);
+        rvLang.hidden = false;
+        rvLang.dataset.alt = alt.dataset.label || "In English";
+        rvLang.textContent = rvLang.dataset.alt;
+      } else {
+        rvLang.hidden = true;
+      }
+
+      rvBody.scrollTop = 0;
+      rv.hidden = false;
+      lockScroll(true, "rv-open");
+      rvClose.focus();
+    };
+
+    const close = () => {
+      rv.hidden = true;
+      lockScroll(false, "rv-open");
+      if (opener) opener.focus();
+      opener = null;
+    };
 
     reviewCards.forEach((card) => {
-      const texts = Array.prototype.slice.call(card.querySelectorAll(".review-text"));
-      const moreBtn = card.querySelector(".review-more");
-      const langBtn = card.querySelector(".review-lang");
-      const visible = () => texts.filter((t) => !t.hidden)[0];
-
-      // кнопка «читать полностью» нужна, только если текст реально обрезан
-      const syncMore = () => {
-        if (!moreBtn || card.classList.contains("open")) return;
-        const t = visible();
-        moreBtn.hidden = !t || t.scrollHeight <= t.clientHeight + 1;
-      };
-
-      if (moreBtn) {
-        moreBtn.addEventListener("click", () => {
-          const open = card.classList.toggle("open");
-          moreBtn.textContent = open ? "Свернуть" : "Читать полностью";
+      card.addEventListener("click", () => open(card));
+      const btn = card.querySelector(".review-open");
+      if (btn) {
+        btn.setAttribute("aria-label", "Читать целиком отзыв: " + (card.dataset.name || ""));
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          open(card);
         });
       }
-
-      if (langBtn) {
-        langBtn.addEventListener("click", () => {
-          texts.forEach((t) => { t.hidden = !t.hidden; });
-          const t = visible();
-          const alt = !!t && t.classList.contains("review-alt");
-          langBtn.textContent = alt ? langBtn.dataset.ru : langBtn.dataset.alt;
-          // у перевода своя длина — пересчитываем обрезку с нуля
-          card.classList.remove("open");
-          if (moreBtn) moreBtn.textContent = "Читать полностью";
-          syncMore();
-        });
-      }
-
-      cards.push(syncMore);
-      syncMore();
     });
 
-    const resync = () => cards.forEach((fn) => fn());
-    // шрифт подгружается позже разметки и меняет высоту строк
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resync);
-    let t = 0;
-    window.addEventListener("resize", () => {
-      clearTimeout(t);
-      t = setTimeout(resync, 180);
+    rvLang.addEventListener("click", () => {
+      if (!altP || !mainP) return;
+      const showAlt = altP.hidden;
+      altP.hidden = !showAlt;
+      mainP.hidden = showAlt;
+      rvLang.textContent = showAlt ? "По-русски" : rvLang.dataset.alt;
+      rvBody.scrollTop = 0;
+    });
+
+    rv.querySelectorAll("[data-rv-close]").forEach((el) =>
+      el.addEventListener("click", close)
+    );
+
+    document.addEventListener("keydown", (e) => {
+      if (rv.hidden) return;
+      if (e.key === "Escape") { close(); return; }
+      if (e.key !== "Tab") return;
+      const items = Array.prototype.slice
+        .call(rv.querySelectorAll("button, [tabindex='0']"))
+        .filter((el) => !el.hidden && el.offsetParent !== null);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
   }
 
